@@ -1,0 +1,6 @@
+[
+ {"name":"ac_home","url":"?lang=zh-Hans#/","wait":4000},
+ {"name":"ac_lang","url":"?lang=zh-Hans#/?sel=nucl1643","wait":4500},
+ {"name":"ac_story","url":"?lang=zh-Hans#/story/tea/1","wait":4500},
+ {"name":"ac_static","url":"http://localhost:4173/zh/languages/japanese-nucl1643/","wait":1500}
+]

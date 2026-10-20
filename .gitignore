@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.shots/
+data/.venv/
+data/raw/
+data/*.log
+.DS_Store
+__pycache__/
+*.pyc
+.wrangler/
+
+# design reviews from choosing the mark and accent: kept locally, not published
+tools/logo-sheet.html
+tools/logo-sheet2.html
+tools/logo-sheet3.html
+tools/logo-compare.html
+tools/logo-final.html
+tools/logo-qt3.html
+tools/logo-qt.js
+tools/accent-sheet.html
+tools/logo-codex/design-notes.txt
+tools/specs/accent.json
+tools/specs/design.json
+tools/specs/logo.json

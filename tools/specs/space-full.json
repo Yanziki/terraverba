@@ -1,0 +1,4 @@
+[
+ {"name":"sp_full","url":"?lang=zh-Hans#/space/vocabulary","wait":3000,"js":["document.querySelector('[data-act=full]').click()"]},
+ {"name":"sp_full3d","url":"?lang=en#/space/grammar","wait":3500,"js":["document.querySelector('[data-dim=\"3d\"]').click()","document.querySelector('[data-act=full]').click()"]}
+]

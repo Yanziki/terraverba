@@ -1,0 +1,4 @@
+[
+ {"name":"rp_word","url":"?lang=zh-Hans#/words/cat?sel=nucl1643","wait":3000,"js":["document.querySelector('#sheet [data-act=report]').click()"]},
+ {"name":"rp_lang","url":"?lang=en#/?sel=amis1246&report","wait":3500}
+]

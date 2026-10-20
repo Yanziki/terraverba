@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      // the theme decides every colour, so set it before the first paint
+      try {
+        const asked = new URLSearchParams(location.search).get('theme');
+        const t = ['classic', 'atelier', 'nocturne'].includes(asked) ? asked : localStorage.getItem('glossa-theme');
+        document.documentElement.dataset.theme = ['classic', 'atelier', 'nocturne'].includes(t) ? t : 'nocturne';
+      } catch {
+        document.documentElement.dataset.theme = 'nocturne';
+      }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Terraverba · An atlas of the world’s languages</title>
+    <meta name="description" content="An interactive globe, map and family tree of the world’s 8,000 languages — where they are spoken, how they are related, and the stories behind them." />
+    <meta name="theme-color" content="#0a0e13" />
+    <script>
+      if (document.documentElement.dataset.theme === 'atelier') document.querySelector('meta[name=theme-color]').setAttribute('content', '#f3f2ee');
+    </script>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Terraverba · An atlas of the world’s languages" />
+    <meta property="og:description" content="More than seven thousand languages are spoken on Earth. Turn the globe and see where they live." />
+    <meta property="og:image" content="og.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <noscript>
+      <p>Terraverba needs JavaScript for the globe. Browse the <a href="languages/">languages</a>, <a href="words/">words</a> and <a href="features/">features</a> as plain pages, or in Chinese: <a href="zh/languages/">语言</a> · <a href="zh/words/">词语</a> · <a href="zh/features/">语言特征</a>.</p>
+    </noscript>
+    <div id="globe"></div>
+    <svg id="instrument" aria-hidden="true"></svg>
+    <div id="labels" aria-hidden="true"></div>
+    <div id="relics"></div>
+    <div id="tooltip" role="tooltip"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#/" aria-label="Terraverba">
+        <svg class="mark" viewBox="14 21 132 132" aria-hidden="true"><g class="ink"><rect x="35.88" y="34" width="88.24" height="22"/><path transform="translate(16.75 130.84) scale(0.071 -0.071)" d="M80 838Q182 885 213 930Q244 975 244 1010Q244 1044 218.5 1067.5Q193 1091 159 1108.5Q125 1126 99.5 1141Q74 1156 74 1174Q74 1252 127 1308Q180 1364 268 1364Q360 1364 412.5 1309Q465 1254 465 1159Q465 1073 432.5 1002Q400 931 325 870Q250 809 120 753Z"/><path transform="translate(104.98 130.84) scale(0.071 -0.071)" d="M80 838Q182 885 213 930Q244 975 244 1010Q244 1044 218.5 1067.5Q193 1091 159 1108.5Q125 1126 99.5 1141Q74 1156 74 1174Q74 1252 127 1308Q180 1364 268 1364Q360 1364 412.5 1309Q465 1254 465 1159Q465 1073 432.5 1002Q400 931 325 870Q250 809 120 753Z"/><path d="M66 55.4H94V118Q94 130 108 132V140H52V132Q66 130 66 118Z"/></g><g class="accent"><path d="M80 56H94V118Q94 130 108 132V140H80Z"/></g></svg>
+        <span class="wordmark"><b>Terraverba</b><small data-t="tagline"></small></span>
+      </a>
+      <nav class="nav">
+        <a href="#/" data-nav="globe" data-t="navGlobe"></a>
+        <a href="#/words" data-nav="words" data-t="navWords"></a>
+        <a href="#/features" data-nav="features" data-t="navFeatures"></a>
+        <a href="#/tree" data-nav="tree" data-t="navTree"></a>
+        <a href="#/space" data-nav="space" data-t="navSpace"></a>
+        <a href="#/stories" data-nav="stories" data-t="navStories"></a>
+        <a href="#/daily" data-nav="daily" data-t="navDaily"></a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="search">
+        <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="5" /><path d="M11 11l3.5 3.5" /></svg>
+        <input type="search" autocomplete="off" spellcheck="false" aria-label="search" />
+        <div class="results" role="listbox"></div>
+      </div>
+      <a class="about-link" href="#/me" data-nav="me" aria-label="passport" data-tip="navMe"><svg viewBox="0 0 16 16"><rect x="3.2" y="1.8" width="9.6" height="12.4" rx="1.4"/><circle cx="8" cy="7" r="2.3"/><path d="M5.6 11.4h4.8"/></svg></a>
+      <a class="about-link" href="#/about" data-nav="about" aria-label="about"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.3"/><path d="M8 7.2v4.2M8 4.6v.4"/></svg></a>
+      <button class="about-link theme-toggle" type="button" data-tip="themeToLight"><svg class="sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.9"/><path d="M8 1.6v1.5M8 12.9v1.5M1.6 8h1.5M12.9 8h1.5M3.5 3.5l1.05 1.05M11.45 11.45l1.05 1.05M3.5 12.5l1.05-1.05M11.45 4.55l1.05-1.05"/></svg><svg class="moon" viewBox="0 0 16 16"><path d="M13.2 10.1A5.6 5.6 0 0 1 5.9 2.8a5.6 5.6 0 1 0 7.3 7.3z"/></svg></button>
+      <div class="locale-wrap">
+        <button class="locale" type="button" aria-haspopup="menu"></button>
+        <div class="locale-menu" role="menu"></div>
+      </div>
+    </header>
+
+    <section id="hero"></section>
+    <main id="page"></main>
+    <aside id="panel" aria-live="polite"></aside>
+    <section id="sheet"></section>
+    <footer id="layers"></footer>
+    <button id="random" type="button"></button>
+    <button id="nearme" type="button"></button>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="coords"></div>
+    <div id="loading"><div class="inner">
+      <svg class="mark" viewBox="14 21 132 132" aria-hidden="true"><g class="ink"><rect x="35.88" y="34" width="88.24" height="22"/><path transform="translate(16.75 130.84) scale(0.071 -0.071)" d="M80 838Q182 885 213 930Q244 975 244 1010Q244 1044 218.5 1067.5Q193 1091 159 1108.5Q125 1126 99.5 1141Q74 1156 74 1174Q74 1252 127 1308Q180 1364 268 1364Q360 1364 412.5 1309Q465 1254 465 1159Q465 1073 432.5 1002Q400 931 325 870Q250 809 120 753Z"/><path transform="translate(104.98 130.84) scale(0.071 -0.071)" d="M80 838Q182 885 213 930Q244 975 244 1010Q244 1044 218.5 1067.5Q193 1091 159 1108.5Q125 1126 99.5 1141Q74 1156 74 1174Q74 1252 127 1308Q180 1364 268 1364Q360 1364 412.5 1309Q465 1254 465 1159Q465 1073 432.5 1002Q400 931 325 870Q250 809 120 753Z"/><path d="M66 55.4H94V118Q94 130 108 132V140H52V132Q66 130 66 118Z"/></g><g class="accent"><path d="M80 56H94V118Q94 130 108 132V140H80Z"/></g></svg>
+    </div></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

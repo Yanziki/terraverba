@@ -1,0 +1,18 @@
+import puppeteer from 'puppeteer-core';
+const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal'] });
+const page = await browser.newPage();
+const errors = [];
+page.on('pageerror', (e) => errors.push(e.message));
+page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+await page.goto('http://localhost:5173/?lang=zh-Hans#/?sel=basq1248', { waitUntil: 'networkidle0' });
+await new Promise((r) => setTimeout(r, 2500));
+await page.click('.locale');
+await new Promise((r) => setTimeout(r, 300));
+const visible = await page.$eval('.locale-menu', (el) => getComputedStyle(el).display);
+await page.click('[data-code="zh-Hant"]');
+const t0 = Date.now();
+await page.waitForFunction(() => document.documentElement.lang === 'zh-Hant', { timeout: 30000 }).catch(() => {});
+const took = Date.now() - t0;
+await new Promise((r) => setTimeout(r, 2500));
+console.log(JSON.stringify({ visible, took, lang: await page.evaluate(() => document.documentElement.lang), title: await page.$eval('#panel .p-title', (e) => e.textContent), note: await page.$eval('#panel .note', (e) => e.textContent.slice(0, 30)), wiki: await page.$eval('#panel .wiki', (e) => e.textContent.slice(0, 40)), nav: await page.$eval('.nav a', (e) => e.textContent), errors }));
+await browser.close();

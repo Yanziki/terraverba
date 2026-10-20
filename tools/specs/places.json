@@ -1,0 +1,12 @@
+[
+ {"name":"p_es_zh","url":"?lang=zh-Hans#/?sel=stan1288","wait":3500},
+ {"name":"p_en_zh","url":"?lang=zh-Hans#/?sel=stan1293","wait":3500},
+ {"name":"p_thao_ja","url":"?lang=ja#/?sel=thao1240","wait":3500},
+ {"name":"p_cmn_ja","url":"?lang=ja#/?sel=mand1415","wait":3500},
+ {"name":"p_es_es","url":"?lang=es#/?sel=stan1288","wait":3500},
+ {"name":"p_ami_de","url":"?lang=de#/?sel=amis1246","wait":3500},
+ {"name":"p_words_ja","url":"?lang=ja#/words/mother","wait":3500},
+ {"name":"p_feat_ja","url":"?lang=ja#/features/tone","wait":3500},
+ {"name":"p_feat_ko","url":"?lang=ko#/features/classifiers","wait":3500},
+ {"name":"p_words_ru","url":"?lang=ru#/words/tea","wait":3500}
+]

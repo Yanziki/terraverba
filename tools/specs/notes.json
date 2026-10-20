@@ -1,0 +1,7 @@
+[
+ {"name":"n_cmn_ja","url":"?lang=ja#/?sel=mand1415","wait":3500},
+ {"name":"n_cmn_hans","url":"?lang=zh-Hans#/?sel=mand1415","wait":3500},
+ {"name":"n_cmn_hant","url":"?lang=zh-Hant#/?sel=mand1415","wait":3500},
+ {"name":"n_basq_ru","url":"?lang=ru#/?sel=basq1248","wait":3500},
+ {"name":"n_yue_ko","url":"?lang=ko#/?sel=yuec1235","wait":3500}
+]

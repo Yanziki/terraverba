@@ -1,0 +1,13 @@
+[
+ {"name":"m_2d","url":"?lang=zh-Hans#/","js":["document.querySelector('[data-act=start]').click()","__glossa.setMode('2d')"],"wait":4500},
+ {"name":"m_2d_layers","url":"?lang=en#/","js":["document.querySelector('[data-act=start]').click()","__glossa.setMode('2d')","__glossa.setLayer('regions',true);__glossa.setLayer('lineage',true)"],"wait":5000},
+ {"name":"m_lineage3d","url":"?lang=en#/?sel=indo1319","js":["__glossa.setLayer('lineage',true)"],"wait":5000},
+ {"name":"m_treefull","url":"?lang=zh-Hans#/tree/aust1307","js":["document.querySelector('[data-act=full]').click()"],"wait":4000},
+ {"name":"m_all","url":"?lang=zh-Hans#/all","wait":3000},
+ {"name":"m_space2d","url":"?lang=zh-Hans#/space/vocabulary","wait":4000},
+ {"name":"m_space3d","url":"?lang=en#/space/grammar?sel=nucl1643","js":["document.querySelector('[data-dim=\"3d\"]').click()"],"wait":4000},
+ {"name":"m_africa","url":"?lang=zh-Hans#/story/africa/1","wait":4500},
+ {"name":"m_ja","url":"?lang=ja#/","wait":3500},
+ {"name":"m_mobile","url":"?lang=zh-Hans#/","w":390,"h":844,"wait":3500},
+ {"name":"m_mobile_panel","url":"?lang=zh-Hans#/?sel=yoru1245","w":390,"h":844,"wait":4500}
+]

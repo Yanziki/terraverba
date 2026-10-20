@@ -1,0 +1,99 @@
+[
+ {
+  "name": "l_home",
+  "url": "?lang=zh-Hans&theme=atelier#/",
+  "wait": 3500
+ },
+ {
+  "name": "l_lang",
+  "url": "?lang=zh-Hans&theme=atelier#/?sel=cher1273",
+  "wait": 4000
+ },
+ {
+  "name": "l_group",
+  "url": "?lang=en&theme=atelier#/?sel=aust1307",
+  "wait": 3500
+ },
+ {
+  "name": "l_tree",
+  "url": "?lang=zh-Hans&theme=atelier#/tree/indo1319",
+  "wait": 3500
+ },
+ {
+  "name": "l_all",
+  "url": "?lang=en&theme=atelier#/all",
+  "wait": 3000
+ },
+ {
+  "name": "l_space",
+  "url": "?lang=zh-Hans&theme=atelier#/space/vocabulary",
+  "wait": 4000
+ },
+ {
+  "name": "l_stories",
+  "url": "?lang=zh-Hans&theme=atelier#/stories",
+  "wait": 3000
+ },
+ {
+  "name": "l_story_tea",
+  "url": "?lang=zh-Hans&theme=atelier#/story/tea/1",
+  "wait": 4000
+ },
+ {
+  "name": "l_story_people",
+  "url": "?lang=en&theme=atelier#/story/people/1",
+  "wait": 4000
+ },
+ {
+  "name": "l_story_untr",
+  "url": "?lang=zh-Hans&theme=atelier#/story/untranslatable/0",
+  "wait": 4000
+ },
+ {
+  "name": "l_feat",
+  "url": "?lang=zh-Hans&theme=atelier#/features/tone",
+  "wait": 3500
+ },
+ {
+  "name": "l_words",
+  "url": "?lang=zh-Hans&theme=atelier#/words/mother",
+  "wait": 4500
+ },
+ {
+  "name": "l_daily",
+  "url": "?lang=zh-Hans&theme=atelier#/daily",
+  "wait": 3500
+ },
+ {
+  "name": "l_me",
+  "url": "?lang=zh-Hans&theme=atelier#/me",
+  "wait": 3500
+ },
+ {
+  "name": "l_about",
+  "url": "?lang=zh-Hans&theme=atelier#/about",
+  "wait": 3000
+ },
+ {
+  "name": "l_near",
+  "url": "?lang=en&theme=atelier#/?sel=@-6.5,147.0,400",
+  "wait": 3500
+ },
+ {
+  "name": "l_relic",
+  "url": "?lang=zh-Hans&theme=atelier#/?sel=relic:oracle",
+  "wait": 4000
+ },
+ {
+  "name": "l_flat",
+  "url": "?lang=en&theme=atelier#/?sel=relic:mendoza",
+  "wait": 4000
+ },
+ {
+  "name": "l_mobile",
+  "url": "?lang=zh-Hans&theme=atelier#/?sel=nucl1643",
+  "wait": 3500,
+  "w": 390,
+  "h": 844
+ }
+]

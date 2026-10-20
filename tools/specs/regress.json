@@ -1,0 +1,14 @@
+[
+ {"name":"r_home","url":"?lang=en#/","wait":3000},
+ {"name":"r_lang","url":"?lang=ja#/?sel=basq1248","wait":3500},
+ {"name":"r_group","url":"?lang=zh-Hans#/?sel=aust1307","wait":3500},
+ {"name":"r_tree","url":"?lang=en#/tree/indo1319","wait":3000},
+ {"name":"r_all","url":"?lang=en#/all","wait":3000},
+ {"name":"r_space","url":"?lang=en#/space/vocabulary","wait":3000},
+ {"name":"r_story","url":"?lang=zh-Hans#/story/tea","wait":3500},
+ {"name":"r_feat","url":"?lang=en#/features/tone","wait":3500},
+ {"name":"r_words","url":"?lang=ko#/words/two","wait":3500},
+ {"name":"r_daily","url":"?lang=fr#/daily","wait":3500},
+ {"name":"r_near","url":"?lang=en#/?sel=@-6.5,147.0,400","wait":3500},
+ {"name":"r_mobile","url":"?lang=zh-Hans#/?sel=nucl1643","wait":3500,"w":390,"h":844}
+]

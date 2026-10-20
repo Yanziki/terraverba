@@ -1,0 +1,5 @@
+[
+ {"name":"h_me_mobile","url":"?lang=ja#/me","wait":3500,"w":390,"h":844},
+ {"name":"h_home_mobile","url":"?lang=zh-Hans#/","wait":3500,"w":390,"h":844},
+ {"name":"h_me_en","url":"?lang=en#/me","wait":3500}
+]

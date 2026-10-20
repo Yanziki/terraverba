@@ -1,0 +1,9 @@
+[
+ {"name":"s_ja_en","url":"http://localhost:4173/languages/japanese-nucl1643/","wait":1500,"full":true},
+ {"name":"s_ja_zh","url":"http://localhost:4173/zh/languages/japanese-nucl1643/","wait":1500,"full":true},
+ {"name":"s_ie","url":"http://localhost:4173/families/indo-european-indo1319/","wait":1500},
+ {"name":"s_water","url":"http://localhost:4173/zh/words/water/","wait":1500},
+ {"name":"s_tone","url":"http://localhost:4173/features/tone/","wait":1500},
+ {"name":"s_index","url":"http://localhost:4173/languages/","wait":1500},
+ {"name":"s_mobile","url":"http://localhost:4173/languages/basque-basq1248/","wait":1500,"w":390,"h":844}
+]

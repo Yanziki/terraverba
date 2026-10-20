@@ -1,0 +1,6 @@
+[
+ {"name":"w_tea","url":"?lang=zh-Hans#/words/tea","wait":5000},
+ {"name":"w_mother","url":"?lang=en#/words/mother","wait":5000},
+ {"name":"w_daily","url":"?lang=zh-Hans#/daily","wait":5000},
+ {"name":"w_daily_where","url":"?lang=zh-Hans#/daily","wait":4000,"js":["document.querySelector('.choice').click()","document.querySelector('[data-act=next]').click()"]}
+]

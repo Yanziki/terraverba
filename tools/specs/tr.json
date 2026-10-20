@@ -1,0 +1,6 @@
+[
+ {"name":"tr_ja_story","url":"?lang=ja#/story/tea/1","wait":4000},
+ {"name":"tr_ru_about","url":"?lang=ru#/about","wait":2500},
+ {"name":"tr_de_story","url":"?lang=de#/story/endangered/0","wait":4000},
+ {"name":"tr_stories_es","url":"?lang=es#/stories","wait":2500}
+]

@@ -1,0 +1,5 @@
+[
+ {"name":"f_flat_sel","url":"?theme=atelier&lang=zh-Hans#/?sel=nucl1643","wait":3500,"js":["document.querySelector('[data-mode=\"2d\"]').click()"]},
+ {"name":"f_flat_home","url":"?theme=atelier&lang=zh-Hans#/","wait":3500,"js":["document.querySelector('#hero .btn').click()","document.querySelector('[data-mode=\"2d\"]').click()"]},
+ {"name":"f_flat_noct","url":"?theme=nocturne&lang=zh-Hans#/?sel=zulu1248","wait":3500,"js":["document.querySelector('[data-mode=\"2d\"]').click()"]}
+]

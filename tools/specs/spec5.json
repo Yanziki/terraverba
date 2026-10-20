@@ -1,0 +1,7 @@
+[
+ {"name":"x_tone","url":"?lang=zh-Hans#/features/tone","wait":4500},
+ {"name":"x_order","url":"?lang=en#/features/order","wait":4500},
+ {"name":"x_gb","url":"?lang=zh-Hans#/features/gb:GB057","wait":4500},
+ {"name":"x_sound","url":"?lang=zh-Hans#/features/sound:θ","wait":4500},
+ {"name":"x_panel","url":"?lang=zh-Hans#/?sel=nucl1643","wait":5000}
+]

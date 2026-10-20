@@ -1,0 +1,6 @@
+[
+ {"name":"d_atelier_home","url":"?theme=atelier&lang=zh-Hans#/","wait":4500},
+ {"name":"d_nocturne_home","url":"?theme=nocturne&lang=zh-Hans#/","wait":4500},
+ {"name":"d_nocturne_lang","url":"?theme=nocturne&lang=en#/?sel=nucl1643","wait":5000},
+ {"name":"d_atelier_daily","url":"?theme=atelier&lang=en#/daily","wait":4500}
+]

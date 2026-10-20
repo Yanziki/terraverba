@@ -1,0 +1,4 @@
+[
+ {"name":"y_panel","url":"?lang=zh-Hans#/?sel=amha1245","wait":5000,"js":["document.querySelector('#panel .panel-scroll').scrollTop = 900"]},
+ {"name":"y_tree","url":"?lang=zh-Hans#/tree","wait":3000}
+]

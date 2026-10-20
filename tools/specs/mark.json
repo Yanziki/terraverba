@@ -1,0 +1,4 @@
+[
+ {"name":"m_home","url":"?lang=zh-Hans#/","wait":4000,"w":1440,"h":900},
+ {"name":"m_static","url":"http://localhost:4173/zh/languages/japanese-nucl1643/","wait":1500}
+]

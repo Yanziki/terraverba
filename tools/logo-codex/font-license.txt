@@ -1,0 +1,3 @@
+Newsreader font source: locally served @fontsource-variable/newsreader/files/newsreader-latin-standard-normal.woff2.
+Copyright 2020 The Newsreader Project Authors (http://github.com/productiontype/Newsreader)
+http://scripts.sil.org/OFL

@@ -1,0 +1,14 @@
+# Cloudflare Pages: the built site in dist/, the API in functions/.
+name = "terraverba"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "terraverba"
+database_id = "fbbd7abe-91d2-4ed0-9e6d-868f0466329c"
+
+# emails each correction to the owner (workers/mail)
+[[services]]
+binding = "MAIL"
+service = "terraverba-mail"

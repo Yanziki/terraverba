@@ -1,0 +1,5 @@
+[
+ {"name":"m_2d","url":"?lang=zh-Hans#/","js":["document.querySelector('[data-act=start]').click()","__glossa.setMode('2d')"],"wait":4500},
+ {"name":"m_2d_layers","url":"?lang=en#/","js":["document.querySelector('[data-act=start]').click()","__glossa.setMode('2d')","__glossa.setLayer('regions',true);__glossa.setLayer('lineage',true)"],"wait":5000},
+ {"name":"m_treefull","url":"?lang=zh-Hans#/tree/aust1307","js":["document.querySelector('[data-act=full]').click()"],"wait":4000}
+]

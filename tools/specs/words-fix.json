@@ -1,0 +1,6 @@
+[
+ {"name":"wf_cat","url":"?lang=zh-Hans#/words/cat","wait":5000,"js":["window.__glossa.globe.flyTo(33, 125, 1.9, 10)"]},
+ {"name":"wf_bird","url":"?lang=zh-Hans#/words/bird","wait":5000,"js":["window.__glossa.globe.flyTo(33, 118, 1.9, 10)"]},
+ {"name":"wf_hello","url":"?lang=zh-Hans#/words/hello","wait":5000,"js":["window.__glossa.globe.flyTo(33, 125, 1.9, 10)"]},
+ {"name":"wf_hant","url":"?lang=zh-Hant#/words/bird","wait":5000,"js":["window.__glossa.globe.flyTo(30, 115, 1.9, 10)"]}
+]

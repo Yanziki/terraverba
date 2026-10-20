@@ -1,0 +1,7 @@
+[
+ {"name":"n_home_zh","url":"?lang=zh-Hans#/"},
+ {"name":"n_home_en","url":"?lang=en#/"},
+ {"name":"n_japanese","url":"?lang=zh-Hans#/?sel=nucl1643","wait":6000},
+ {"name":"n_near","url":"?lang=zh-Hans#/?sel=@46.5,8.2,300","wait":5000},
+ {"name":"n_layers","url":"?lang=zh-Hans#/","js":["__glossa.setLayer('regions',true);__glossa.setLayer('lineage',true);document.querySelector('[data-act=start]').click()"],"wait":5000}
+]

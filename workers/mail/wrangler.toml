@@ -1,0 +1,11 @@
+# A Worker only the corrections function can reach (no workers.dev address, no routes).
+name = "terraverba-mail"
+main = "index.js"
+compatibility_date = "2026-09-01"
+workers_dev = false
+preview_urls = false
+
+# no fixed address here: the binding can only reach verified destinations,
+# and the recipient comes from the secret TO
+[[send_email]]
+name = "MAIL"

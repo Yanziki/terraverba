@@ -1,0 +1,166 @@
+/* Themes beyond the original paper atlas (data-theme on <html>, see theme.js).
+   Atelier and Nocturne share one set of refinements — frameless surfaces,
+   soft layered shadows, pill controls, quieter rules — and differ in tokens. */
+
+:root[data-theme='atelier'] {
+  --paper: #f3f2ee;
+  --paper-2: rgba(20, 20, 18, 0.045);
+  --paper-3: rgba(20, 20, 18, 0.09);
+  --card: rgba(255, 255, 255, 0.84);
+  --solid: #ffffff;
+  --thumb: #ffffff;
+  --ink: #151513;
+  --ink-2: #4b4a46;
+  --ink-3: #8c8a84;
+  --rule: rgba(20, 20, 18, 0.075);
+  --rule-strong: rgba(20, 20, 18, 0.16);
+  --accent: #2c6db3;
+  --accent-ink: #1f5592;
+  --halo: #f6f5f1;
+  --ground: radial-gradient(ellipse 75% 70% at 62% 48%, #fbfaf8 0%, #f3f2ee 55%, #ebe9e3 100%);
+  --topbar: linear-gradient(to bottom, rgba(243, 242, 238, 0.96) 0%, rgba(243, 242, 238, 0.7) 62%, rgba(243, 242, 238, 0));
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.04), 0 10px 30px -10px rgba(20, 20, 18, 0.14), 0 30px 70px -30px rgba(20, 20, 18, 0.18);
+  --thumb-shadow: 0 1px 2px rgba(20, 20, 18, 0.08), 0 2px 8px -2px rgba(20, 20, 18, 0.12);
+  --btn: #151513;
+  --btn-ink: #fbfaf8;
+  color-scheme: light;
+}
+
+:root[data-theme='nocturne'] {
+  --paper: #0a0e13;
+  --paper-2: rgba(255, 255, 255, 0.055);
+  --paper-3: rgba(255, 255, 255, 0.11);
+  --card: rgba(18, 23, 30, 0.74);
+  --solid: #121820;
+  --thumb: rgba(255, 255, 255, 0.13);
+  --ink: #eef1f4;
+  --ink-2: #b6bec7;
+  --ink-3: #7b8692;
+  --rule: rgba(255, 255, 255, 0.075);
+  --rule-strong: rgba(255, 255, 255, 0.17);
+  --accent: #8fc3ff;
+  --accent-ink: #b5d7ff;
+  --halo: #0a0e13;
+  --ground: radial-gradient(ellipse 70% 75% at 62% 50%, #16202b 0%, #0d1219 50%, #07090d 100%);
+  --topbar: linear-gradient(to bottom, rgba(10, 14, 19, 0.92) 0%, rgba(10, 14, 19, 0.6) 62%, rgba(10, 14, 19, 0));
+  --shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+  --thumb-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --btn: #eef1f4;
+  --btn-ink: #0a0e13;
+  color-scheme: dark;
+}
+
+/* ── shared refinements ─────────────────────────────── */
+:root:is([data-theme='atelier'], [data-theme='nocturne']) {
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+:is([data-theme='atelier'], [data-theme='nocturne']) body { background: var(--ground); background-attachment: fixed; }
+:is([data-theme='atelier'], [data-theme='nocturne']) ::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+
+/* globe surroundings: no degree ticks, a quieter ring */
+:is([data-theme='atelier'], [data-theme='nocturne']) #instrument .ticks { display: none; }
+:is([data-theme='atelier'], [data-theme='nocturne']) #instrument .ring { stroke: var(--rule); }
+[data-theme='nocturne'] #instrument .ring, [data-theme='nocturne'] #instrument .shadow { display: none; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .glabel { text-shadow: 0 0 2px var(--halo), 0 0 4px var(--halo), 0 0 8px var(--halo); }
+[data-theme='nocturne'] .glabel { color: #e8edf2; }
+[data-theme='nocturne'] .glabel.strong { color: var(--accent-ink); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .dot { box-shadow: 0 0 0 1.5px var(--solid), 0 0 0 2px var(--rule); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .swatches { box-shadow: 0 0 0 1.5px var(--solid), 0 0 0 2px var(--rule); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .tree-node text { stroke: var(--halo); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .tree-node circle.lang-dot { stroke: var(--halo); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .slabel { text-shadow: 0 0 2px var(--halo), 0 0 4px var(--halo), 0 0 8px var(--halo); }
+
+/* surfaces: one material, no hard frames */
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(#panel, #sheet, #layers, #tooltip, .results, .locale-menu, .space-tip, .report-card) {
+  border: 0; border-radius: var(--radius); box-shadow: var(--shadow);
+  backdrop-filter: blur(22px) saturate(1.35); -webkit-backdrop-filter: blur(22px) saturate(1.35);
+}
+:is([data-theme='atelier'], [data-theme='nocturne']) #tooltip { border-radius: var(--radius-sm); padding: 10px 13px 11px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) #sheet.full { background: var(--card); }
+:is([data-theme='atelier'], [data-theme='nocturne']) #page { background: var(--ground); }
+:is([data-theme='atelier'], [data-theme='nocturne']) #loading { background: var(--paper); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .sheet-head, :is([data-theme='atelier'], [data-theme='nocturne']) .page-head { border-bottom-color: var(--rule); }
+
+/* top bar */
+:is([data-theme='atelier'], [data-theme='nocturne']) .topbar { background: var(--topbar); height: var(--top); }
+:is([data-theme='atelier'], [data-theme='nocturne']) body.page-open .topbar { background: var(--paper); border-bottom-color: var(--rule); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .wordmark b { font-style: normal; font-weight: 650; font-size: 21px; letter-spacing: -0.02em; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .wordmark small { letter-spacing: 0.16em; font-size: 10px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .nav { gap: 2px; padding: 3px; border-radius: 999px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .nav a { padding: 7px 13px; border-radius: 999px; font-size: 13.5px; transition: background 0.2s, color 0.2s; }
+@media (min-width: 900px) and (max-width: 1280px) {
+  :is([data-theme='atelier'], [data-theme='nocturne']) .nav a { padding: 7px 10px; }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  :is([data-theme='atelier'], [data-theme='nocturne']) .nav a { padding: 6px 8px; font-size: 13px; }
+}
+:is([data-theme='atelier'], [data-theme='nocturne']) .nav a:hover { background: var(--paper-2); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .nav a.on { background: var(--thumb); box-shadow: var(--thumb-shadow); color: var(--ink); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .nav a.on::after { display: none; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .search input { height: 38px; border-radius: 999px; border: 0; background: var(--paper-2); padding-left: 38px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .search input:focus { background: var(--solid); box-shadow: var(--thumb-shadow); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .search svg { left: 14px; top: 11px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(.locale, .about-link) { border: 0; background: var(--paper-2); border-radius: 999px; height: 38px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .about-link { width: 38px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(.locale, .about-link):hover { background: var(--paper-3); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .results { top: 46px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(.result, .locale-menu button) { border-radius: var(--radius-sm); }
+
+/* controls */
+:is([data-theme='atelier'], [data-theme='nocturne']) .btn {
+  height: 40px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--btn); color: var(--btn-ink); font-weight: 500;
+}
+:is([data-theme='atelier'], [data-theme='nocturne']) .btn:hover { background: var(--btn); opacity: 0.86; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .btn.ghost { background: var(--paper-2); color: var(--ink); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .btn.ghost:hover { background: var(--paper-3); opacity: 1; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .btn.small { height: 32px; padding: 0 14px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .seg { border: 0; background: var(--paper-2); border-radius: 999px; padding: 3px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .seg button { border-radius: 999px; padding: 6px 12px; transition: background 0.2s, color 0.2s; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .seg button.on { background: var(--thumb); color: var(--ink); box-shadow: var(--thumb-shadow); font-weight: 500; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .chip { border: 0; background: var(--paper-2); padding: 5px 12px 5px 10px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .chip:hover { background: var(--paper-3); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .chip.on { background: var(--btn); color: var(--btn-ink); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .toggle .box { border-radius: 5px; width: 16px; height: 16px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .toggle input:checked + .box { background: var(--btn); border-color: var(--btn); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .toggle input:checked + .box::after { border-color: var(--btn-ink); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .legend-list li { border-radius: 8px; padding: 4px 8px; margin: 0 -8px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(#random, #nearme) { border: 0; height: 34px; padding: 0 15px; background: var(--card); backdrop-filter: blur(16px); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .close:hover { background: var(--paper-2); }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(.field input, .field select, .field textarea, .atree-filter, .atree-jump) {
+  background: var(--paper-2); border: 0; border-radius: var(--radius-sm); color: var(--ink);
+}
+:is([data-theme='atelier'], [data-theme='nocturne']) .field :focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent); }
+
+/* type: larger, tighter display sizes */
+:is([data-theme='atelier'], [data-theme='nocturne']) #hero h1 { font-size: clamp(34px, 3.6vw, 56px); line-height: 1.06; letter-spacing: -0.025em; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(:lang(zh-Hans), :lang(zh-Hant), :lang(ja), :lang(ko)) #hero h1 { letter-spacing: 0; line-height: 1.28; font-weight: 600; font-size: clamp(28px, 2.8vw, 42px); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .kicker { letter-spacing: 0.18em; font-size: 10.5px; font-weight: 600; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .p-title { font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(:lang(zh-Hans), :lang(zh-Hant), :lang(ja), :lang(ko)) .p-title { font-weight: 600; letter-spacing: 0; font-size: 34px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .sheet-head h2 { font-size: 32px; letter-spacing: -0.02em; }
+:is([data-theme='atelier'], [data-theme='nocturne']) :is(:lang(zh-Hans), :lang(zh-Hant), :lang(ja), :lang(ko)) .sheet-head h2 { font-weight: 600; letter-spacing: 0; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .facts { border: 0; background: var(--paper-2); border-radius: 12px; padding: 16px 18px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .note { border-left-width: 2px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .section h3 { letter-spacing: 0.16em; font-size: 10.5px; font-weight: 600; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .stats { border-top-color: var(--rule); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .stat b { font-size: 30px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .udhr, :is([data-theme='atelier'], [data-theme='nocturne']) .report-about { background: var(--paper-2); border-radius: 12px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .daily-result { border-radius: 12px; }
+:is([data-theme='atelier'], [data-theme='nocturne']) .choice { border-radius: 12px; border-color: var(--rule-strong); background: transparent; color: var(--ink); }
+[data-theme='nocturne'] .choice.right { background: rgba(80, 170, 110, 0.18); border-color: #57a774; }
+[data-theme='nocturne'] .choice.wrong { background: rgba(200, 90, 70, 0.18); border-color: #c45c48; }
+
+/* the mark: the quotation T, its stem half in the accent colour (tools/mark-qt.mjs) */
+.mark .ink { fill: currentColor; }
+.mark .accent { fill: var(--accent); }
+:is([data-theme='atelier'], [data-theme='nocturne']) .mark { color: var(--ink); }
+
+@media (max-width: 899px) {
+  :is([data-theme='atelier'], [data-theme='nocturne']) .nav { border-radius: 0; background: var(--card); backdrop-filter: blur(18px); }
+  :is([data-theme='atelier'], [data-theme='nocturne']) #panel, :is([data-theme='atelier'], [data-theme='nocturne']) #sheet { border-radius: 20px 20px 0 0; }
+}
+
+/* daily quiz grades on the dark ground */
+[data-theme='nocturne'] { --good: #5fb27c; --near: #d3c57e; --miss: #d9727e; }
+[data-theme='nocturne'] .sort-card.picked .k { color: #0a0e13; }

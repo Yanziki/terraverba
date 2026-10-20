@@ -19,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This licence covers the code (src/, tools/, data/*.py, functions/, workers/ and the
-build configuration). It does not cover:
-
-- the written content (stories, "did you know" notes, relic texts and their
-  translations) and the generated data in public/data/, which are licensed
-  under Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0), because
-  they include material from Wiktionary, Wikipedia and PHOIBLE;
-- third-party material (Glottolog, Wikidata, Unicode CLDR, ASJP, Grambank,
-  PHOIBLE, UDHR in Unicode, Natural Earth, Wikimedia Commons photographs and
-  recordings, the Newsreader, Inter and IBM Plex Mono fonts), which keeps its
-  own licence, listed in README.md and on the site's About page;
-- the name "Terraverba" and its logo, which are not licensed for reuse.

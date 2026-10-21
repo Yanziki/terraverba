@@ -20,7 +20,8 @@ def main():
     if not SRC.exists() and any(OUT.glob("*.json")) and not (OUT / "00.json").exists():
         shutil.move(str(OUT), str(SRC))
     packs = defaultdict(dict)
-    for path in SRC.glob("*.json"):
+    # in a fixed order, so the packs come out the same on any machine
+    for path in sorted(SRC.glob("*.json")):
         packs[shard(path.stem)][path.stem] = json.loads(path.read_text())
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.json"):

@@ -70,6 +70,9 @@ DOCULECT = {
     "MIN_LEIZHOU": "leiz1236",
     "WU_WENZHOU": "ouji1238", "WU_WENZHOU_YONGJIA": "ouji1238", "WU_WENZHOU_PINGYANG": "ouji1238",
 }
+# word lists ASJP marks as long extinct although the language is in use today
+# (its Quranic and Classical Arabic lists stay out)
+LIVING = {"STANDARD_ARABIC", "STANDARD_ARABIC_2"}
 
 
 def vocabulary(up):
@@ -83,7 +86,7 @@ def vocabulary(up):
     best = {}
     for d in read_csv(RAW / "asjp" / "languages.csv"):
         g = DOCULECT.get(d["ID"]) or up(d["Glottocode"])
-        if not g or d["long_extinct"] == "True":
+        if not g or (d["long_extinct"] == "True" and d["ID"] not in LIVING):
             continue
         if len(forms[d["ID"]]) >= 28 and len(forms[d["ID"]]) > len(best.get(g, {})):
             best[g] = forms[d["ID"]]

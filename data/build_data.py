@@ -91,6 +91,11 @@ NAME_OVERRIDE = {
     "swah1253": {"ko": "스와힐리어", "pt": "Suaíli"},
     "nort2690": {"ja": "ウズベク語（北部）", "ko": "우즈베크어(북부)", "es": "Uzbeko septentrional", "pt": "Usbeque setentrional"},
 }
+# Wikipedia articles kept on another Wikidata item: the general "Arabic" article
+# sits on the macrolanguage, "Indonesian" on a retired Glottolog code. A language's
+# own article, where it has one, still comes first.
+WIKI_SAME_AS = {"stan1318": "arab1395", "indo1316": "stin1234"}
+
 # Traditional-script names that are not just the Simplified ones converted
 ZH_HANT_OVERRIDE = {"mand1415": "官話（華語）"}
 
@@ -360,7 +365,7 @@ def main():
             name = NAME_OVERRIDE.get(x["id"], {}).get(loc) or localized_name(loc, labels, lexvo_zh.get(x["id"]), x["id"], gloss)
             if name and name != x["en"]:
                 per_locale[loc]["names"][x["id"]] = name
-            title = wd.get("wiki", {}).get(WIKI_OF[loc])
+            title = wd.get("wiki", {}).get(WIKI_OF[loc]) or wikidata.get(WIKI_SAME_AS.get(x["id"]), {}).get("wiki", {}).get(WIKI_OF[loc])
             if title:
                 per_locale[loc]["wiki"][x["id"]] = title
 

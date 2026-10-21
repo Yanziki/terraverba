@@ -539,6 +539,7 @@ body.page-open .topbar { background: var(--paper); border-bottom: 1px solid var(
     transform: translateY(calc(100% + 46px + env(safe-area-inset-bottom) + 48px));
   }
   #sheet.full { height: calc(100vh - var(--top) - 46px); }
+  #sheet.front { z-index: 27; } /* opened after the language panel (main.js layout) */
   #panel.on, #sheet.on { transform: none; }
   /* drawers (ui/drawer.js): a strip with the title, half the screen, or all of it */
   #panel, #sheet { transition: transform 0.45s cubic-bezier(.2,.7,.2,1), height 0.32s cubic-bezier(.2,.7,.2,1); }

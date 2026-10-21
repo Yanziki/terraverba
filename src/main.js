@@ -244,8 +244,10 @@ async function boot() {
     const sheet = $('#sheet');
     const sheetOn = sheet.classList.contains('on');
     const pageOn = PAGE_VIEWS.has(app.route.view);
-    // on a phone, the drawer in front (panel over sheet) may be pulled down to a strip
-    const front = panelOn ? $('#panel') : sheetOn ? sheet : null;
+    // on a phone, the drawer in front may be pulled down to a strip
+    const sheetFront = sheetOn && (!panelOn || app.state.front === 'sheet');
+    sheet.classList.toggle('front', isNarrow() && sheetFront);
+    const front = sheetFront ? sheet : panelOn ? $('#panel') : null;
     const strip = isNarrow() && front?.dataset.snap === 'peek';
     if (isNarrow()) {
       const covered = front ? (strip ? PEEK + 46 : window.innerHeight * 0.62) : 0;
@@ -420,6 +422,11 @@ async function boot() {
     }
 
     const viewKey = `${r.view}/${r.arg}/${r.arg2}`;
+    // on a phone the panel and the sheet are drawers over each other: whichever
+    // the reader opened last comes in front ("open in the family tree" from a
+    // language brings the tree over it; a language picked in the tree, its panel)
+    if (!force && viewKey !== lastView && SHEET_VIEWS.has(r.view)) app.state.front = 'sheet';
+    else if (!force && r.sel && r.sel !== lastSel) app.state.front = 'panel';
     if (force || viewKey !== lastView) {
       const leavingStory = lastView?.startsWith('story/') && r.view !== 'story';
       if (/^(features|words)\//.test(lastView ?? '') && r.view !== lastView.split('/')[0]) app.applyFeature(null);

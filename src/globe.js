@@ -214,6 +214,13 @@ const dotVertex = /* glsl */ `
     float id = float(gl_InstanceID);
     #endif
     if (abs(id - uHover) < 0.5) grow = 2.0;
+    #ifdef TOP
+    // the second pass draws only the dots that stand out, over all the others
+    if (grow < 1.4) {
+      gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+      return;
+    }
+    #endif
     float s = aState > 2.5 ? 0.0 : aSize * uScale * grow;
     float lift = 0.0012 + (aState > 1.5 ? 0.0008 : 0.0);
     vec3 base = mix(n * (1.0 + lift), aFlat + vec3(lift, 0.0, 0.0), uFlat);
@@ -521,6 +528,13 @@ export class Globe {
     }));
     dots.frustumCulled = false;
     dots.renderOrder = 3;
+    // the dot under the pointer and the highlighted ones, again, on top
+    const top = new THREE.Mesh(geo, dots.material.clone());
+    top.material.uniforms = this.dotUniforms;
+    top.material.defines = { ...dots.material.defines, TOP: '' };
+    top.frustumCulled = false;
+    top.renderOrder = 4;
+    dots.add(top);
     this.scene.add(dots);
     this.dots = dots;
   }

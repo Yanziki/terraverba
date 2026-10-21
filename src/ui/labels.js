@@ -1,7 +1,11 @@
 // Atlas-style name labels: the most-spoken visible languages get a label,
 // placed greedily so none overlap. Selection is recomputed a few times a
-// second; positions follow the map every frame.
-const POOL = 40;
+// second; positions follow the map every frame. To keep them steady while the
+// globe turns, a label already showing keeps its place unless a far more
+// spoken language needs the room, and each language keeps its own element
+// (fading in where it appears, fading out where it leaves).
+const POOL = 56;
+const FADE = 300; // ms, as .glabel's opacity transition
 const WIDE = /[ᄀ-ᇿ⺀-鿿가-힯豈-﫿＀-￯]/;
 
 export function createLabels(app) {
@@ -16,6 +20,7 @@ export function createLabels(app) {
   });
   let placed = [];
   let lastPick = 0;
+  const shownBy = new Map(); // language id → its element
   drawInstrument(ring);
 
   function pick() {
@@ -45,11 +50,19 @@ export function createLabels(app) {
       const l = data.byId.get(id);
       if (l?.kind === 'lang') tryPlace(l, 'strong');
     }
-    // languages are stored most-spoken first
-    for (let i = 0; i < data.languages.length && out.length < max && (focus || i < 1600); i++) {
+    // languages are stored most-spoken first; one already labelled counts as
+    // four times as spoken, so it is not pushed out by a slightly bigger neighbour
+    const before = new Set(placed.map((x) => x.l.id));
+    const cands = [];
+    for (let i = 0; i < data.languages.length && (focus || i < 1600); i++) {
       const l = data.languages[i];
       if (strong.has(l.id) || (focus && !focus.has(l.id))) continue;
       if (!focus && !l.speakers) break;
+      cands.push([before.has(l.id) ? i / 4 : i, i, l]);
+    }
+    cands.sort((a, b) => a[0] - b[0]);
+    for (const [, i, l] of cands) {
+      if (out.length >= max) break;
       tryPlace(l, i < 12 ? 'big' : '');
     }
     placed = out;
@@ -57,24 +70,55 @@ export function createLabels(app) {
 
   function position() {
     const { globe } = app;
-    els.forEach((el, i) => {
-      const item = placed[i];
-      const p = item && globe.project(item.l, 0.04);
+    const now = performance.now();
+    const at = (el, p) => (el.style.transform = `translate(${p.x.toFixed(1)}px, ${(p.y - 13).toFixed(1)}px) translate(-50%, -50%)`);
+    const want = new Set(placed.map((x) => x.l.id));
+    // labels that left fade out where their language is
+    for (const [id, el] of shownBy) {
+      if (want.has(id)) continue;
+      shownBy.delete(id);
+      el._freed = now;
+      el.style.opacity = 0;
+    }
+    for (const el of els) {
+      if (el._freed && now - el._freed < FADE && el._l) {
+        const p = globe.project(el._l, 0.04);
+        if (p) at(el, p);
+      }
+    }
+    for (const item of placed) {
+      let el = shownBy.get(item.l.id);
+      if (!el) {
+        // the element that has been free the longest, so nothing is still fading in it
+        el = els.filter((e) => ![...shownBy.values()].includes(e)).sort((a, b) => (a._freed ?? 0) - (b._freed ?? 0))[0];
+        if (!el) continue;
+        shownBy.set(item.l.id, el);
+        el._l = item.l;
+        el._freed = 0;
+        el._fresh = true;
+      }
+      const p = globe.project(item.l, 0.04);
       if (!p) {
         el.style.opacity = 0;
-        if (!item) el._id = null;
-        return;
+        continue;
       }
-      if (el._id !== item.l.id || el._name !== item.name) {
-        el._id = item.l.id;
+      if (el._name !== item.name) {
         el._name = item.name;
         el.textContent = item.name;
       }
       el.className = `glabel ${item.cls}`;
+      at(el, p);
+      if (el._fresh) {
+        // appear in place, from nothing
+        el._fresh = false;
+        el.style.transition = 'none';
+        el.style.opacity = 0;
+        void el.offsetWidth;
+        el.style.transition = '';
+      }
       // fade toward the limb of the globe
       el.style.opacity = Math.min(1, (p.facing - 0.3) * 2.2).toFixed(2);
-      el.style.transform = `translate(${p.x.toFixed(1)}px, ${(p.y - 13).toFixed(1)}px) translate(-50%, -50%)`;
-    });
+    }
     updateInstrument(ring, globe);
   }
 

@@ -59,7 +59,7 @@ a { color: inherit; }
 #instrument .tick { stroke: var(--ink-3); stroke-width: 0.75; }
 #instrument .tick.major { stroke: var(--ink-2); }
 #instrument .shadow { fill: url(#globe-shadow); }
-#labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+#labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; transition: opacity 0.35s 0.08s; }
 .glabel {
   position: absolute; left: 0; top: 0;
   font-family: var(--serif); font-size: 12.5px; letter-spacing: 0.01em; white-space: nowrap; color: var(--ink);
@@ -69,6 +69,7 @@ a { color: inherit; }
 .glabel.big { font-size: 14px; font-weight: 500; }
 .glabel.strong { font-weight: 600; color: var(--accent-ink); font-size: 14px; }
 body.page-open #labels, body.page-open #instrument, body.page-open #coords { opacity: 0; }
+body.page-open #labels { transition: none; }
 
 #tooltip {
   position: fixed; z-index: 30; pointer-events: none;
@@ -904,8 +905,9 @@ body.page-open .topbar { background: var(--paper); border-bottom: 1px solid var(
 .words td.word .gloss { display: block; font-style: normal; font-family: var(--sans); font-size: 12.5px; line-height: 1.45; color: var(--ink-3); margin-top: 2px; }
 
 /* relics of writing: round pictures on stems, pinned to the globe */
-#relics { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-body.page-open #relics { opacity: 0; }
+#relics { position: fixed; inset: 0; pointer-events: none; overflow: hidden; transition: opacity 0.35s 0.08s; }
+/* hidden at once under a full page; back with a short fade, once the pins have been placed for the globe again */
+body.page-open #relics { opacity: 0; transition: none; }
 body.page-open #relics .relic-pin { pointer-events: none; }
 .relic-pin { position: absolute; left: 0; top: 0; width: 40px; height: 52px; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; transition: opacity 0.2s; }
 .relic-pin img { display: block; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1.5px rgba(232, 237, 242, 0.85), 0 4px 14px rgba(0, 0, 0, 0.45); transition: transform 0.18s, box-shadow 0.18s; }

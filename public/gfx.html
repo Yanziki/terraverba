@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Terraverba · 图形诊断 / Graphics check</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 20px 16px 40px; background: #0a0e13; color: #eef1f4; font: 15px/1.55 -apple-system, 'PingFang SC', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { color: #b6bec7; margin: 0 0 16px; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  td { padding: 7px 6px; border-bottom: 1px solid rgba(255,255,255,.08); vertical-align: top; word-break: break-word; }
+  td:first-child { color: #7b8692; width: 42%; }
+  .ok { color: #7fd1a0; } .bad { color: #ff8f8f; } .warn { color: #e6c27a; }
+  canvas { width: 160px; height: 80px; border-radius: 8px; margin-top: 14px; background: #111; }
+</style>
+</head>
+<body>
+<h1>图形诊断 · Graphics check</h1>
+<p>请截下整页发给我们。这一页只在你的手机上运行，不会上传任何信息。<br>Please send a screenshot of this whole page. It runs only on your device and sends nothing.</p>
+<table id="out"></table>
+<canvas id="c" width="320" height="160"></canvas>
+<script>
+// What this browser's WebGL can do, and whether a globe-sized texture survives.
+const rows = [];
+const add = (k, v, cls = '') => rows.push(`<tr><td>${k}</td><td class="${cls}">${v}</td></tr>`);
+const show = () => (document.getElementById('out').innerHTML = rows.join(''));
+add('浏览器 Browser', navigator.userAgent);
+add('屏幕 Screen', `${screen.width}×${screen.height} @${devicePixelRatio}x`);
+add('内存 Memory', navigator.deviceMemory ? `${navigator.deviceMemory} GB` : '—');
+const strict = document.createElement('canvas').getContext('webgl2', { failIfMajorPerformanceCaveat: true });
+add('WebGL 2 (硬件 hardware)', strict ? '可用 yes' : '不可用 no', strict ? 'ok' : 'bad');
+const canvas = document.getElementById('c');
+const gl = canvas.getContext('webgl2');
+const gl1 = gl ? null : document.createElement('canvas').getContext('webgl');
+add('WebGL 2', gl ? '可用 yes' : '不可用 no', gl ? 'ok' : 'bad');
+if (!gl) add('WebGL 1', gl1 ? '可用 yes' : '不可用 no', gl1 ? 'warn' : 'bad');
+if (gl) {
+  const info = gl.getExtension('WEBGL_debug_renderer_info');
+  add('显卡 GPU', info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+  add('厂商 Vendor', info ? gl.getParameter(info.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR));
+  add('最大贴图 Max texture', gl.getParameter(gl.MAX_TEXTURE_SIZE));
+  add('抗锯齿 MSAA', gl.getParameter(gl.MAX_SAMPLES));
+  let lost = false;
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); lost = true; });
+  // the globe's map: a 4096×2048 texture with mipmaps, like the real site on a phone
+  const t0 = performance.now();
+  const results = [];
+  for (const w of [2048, 4096]) {
+    const tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, w / 2, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.generateMipmap(gl.TEXTURE_2D);
+    const err = gl.getError();
+    results.push(`${w}×${w / 2}: ${err === 0 ? 'OK' : 'error ' + err}`);
+    gl.deleteTexture(tex);
+  }
+  gl.clearColor(0.56, 0.76, 1, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.finish();
+  add('大贴图测试 Big textures', results.join(' · '), results.every((r) => r.endsWith('OK')) ? 'ok' : 'bad');
+  setTimeout(() => {
+    add('3 秒后 After 3 s', lost || gl.isContextLost() ? '画布丢失 context lost' : '正常 still fine', lost ? 'bad' : 'ok');
+    add('用时 Time', `${Math.round(performance.now() - t0)} ms`);
+    show();
+  }, 3000);
+}
+add('时间 Time of test', new Date().toISOString());
+show();
+</script>
+</body>
+</html>

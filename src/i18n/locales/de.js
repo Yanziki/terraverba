@@ -362,6 +362,9 @@ export default {
   feedbackThanks: 'Danke! Ihr Vorschlag wurde gesendet.',
   feedbackButton: 'Vorschlag senden',
   feedbackAbout: 'Ideen für die Website, oder funktioniert etwas nicht wie erwartet? Senden Sie einen Vorschlag oder schreiben Sie an {mail}.',
+  gfxFail: 'Der Browser auf diesem Gerät konnte den 3D-Globus nicht anzeigen. Laden Sie neu oder versuchen Sie einen anderen Browser; Sprachlisten und Seiten funktionieren weiterhin.',
+  gfxReload: 'Neu laden',
+  gfxBrowse: 'Alle Sprachen',
   reportKinds: { word: 'Ein Wort', name: 'Der Name', place: 'Wo sie gesprochen wird', family: 'Familie oder Einordnung', summary: 'Die Zusammenfassung', other: 'Etwas anderes' },
   reportWordIs: (c, w) => `Das Wort für „${c}“: ${w}`,
 };

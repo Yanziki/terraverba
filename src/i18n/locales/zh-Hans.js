@@ -362,6 +362,9 @@ export default {
   feedbackThanks: '谢谢！你的建议已经送到。',
   feedbackButton: '提建议',
   feedbackAbout: '对网站有想法，或者发现哪里不好用？欢迎提建议，也可以写信到 {mail}。',
+  gfxFail: '这台设备上的浏览器没能把 3D 地球显示出来。可以重新加载试试，或者换一个浏览器；语言列表和各个页面仍然可以正常使用。',
+  gfxReload: '重新加载',
+  gfxBrowse: '浏览全部语言',
   reportKinds: { word: '某个词', name: '名称', place: '使用地区', family: '谱系 / 分类', summary: '简介', other: '其他' },
   reportWordIs: (c, w) => `“${c}”这个词：${w}`,
 };

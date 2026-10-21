@@ -465,6 +465,9 @@ body.page-open .topbar { background: var(--paper); border-bottom: 1px solid var(
 .space-tip.on { display: flex; }
 .space-hint { position: absolute; right: 18px; bottom: 14px; z-index: 2; pointer-events: none; }
 
+#gfx-fail { position: fixed; left: 50%; top: 42%; transform: translate(-50%, -50%); z-index: 13; width: min(420px, calc(100vw - 40px)); padding: 22px 24px; border-radius: 18px; background: var(--card); box-shadow: var(--shadow); backdrop-filter: blur(14px); color: var(--ink-2); font-size: 14.5px; line-height: 1.6; }
+#gfx-fail p { margin: 0 0 14px; }
+#gfx-fail .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--paper); transition: opacity 0.8s; }
 #loading.off { opacity: 0; pointer-events: none; }
 #loading .mark { width: 44px; height: 44px; animation: breathe 1.8s ease-in-out infinite; }
@@ -513,7 +516,7 @@ body.page-open .topbar { background: var(--paper); border-bottom: 1px solid var(
   #hero { left: 0; right: 0; width: auto; top: auto; bottom: 0; transform: none; padding: 64px 18px 86px; background: linear-gradient(to bottom, rgba(243, 238, 228, 0), var(--paper) 56px); }
   #hero.off { transform: translateY(12px); }
   #hero { touch-action: none; } /* a swipe puts it away (main.js) */
-  #hero h1, :is(:lang(zh-Hans), :lang(zh-Hant), :lang(ja), :lang(ko)) #hero h1 { font-size: 26px; margin: 8px 0 10px; }
+  #hero h1, :is(:lang(zh-Hans), :lang(zh-Hant), :lang(ja), :lang(ko)) #hero h1 { font-size: 26px; margin: 8px 0 10px; text-wrap: balance; }
   #hero p { font-size: 14px; margin-bottom: 16px; }
   .stats { display: none; }
   #layers { left: 10px; bottom: 60px; width: auto; max-width: calc(100vw - 20px); padding: 6px 10px 8px; }

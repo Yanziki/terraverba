@@ -362,6 +362,9 @@ export default {
   feedbackThanks: '謝謝！你的建議已經送達。',
   feedbackButton: '提建議',
   feedbackAbout: '對網站有想法，或者發現哪裡不好用？歡迎提建議，也可以寫信到 {mail}。',
+  gfxFail: '這台裝置上的瀏覽器沒能把 3D 地球顯示出來。可以重新載入試試，或者換一個瀏覽器；語言列表和各個頁面仍然可以正常使用。',
+  gfxReload: '重新載入',
+  gfxBrowse: '瀏覽全部語言',
   reportKinds: { word: '某個詞', name: '名稱', place: '使用地區', family: '譜系 / 分類', summary: '簡介', other: '其他' },
   reportWordIs: (c, w) => `「${c}」這個詞：${w}`,
 };

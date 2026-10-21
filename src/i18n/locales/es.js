@@ -362,6 +362,9 @@ export default {
   feedbackThanks: '¡Gracias! Tu sugerencia se ha enviado.',
   feedbackButton: 'Enviar una sugerencia',
   feedbackAbout: '¿Tienes ideas para el sitio o algo no funciona como debería? Envía una sugerencia o escribe a {mail}.',
+  gfxFail: 'El navegador de este dispositivo no pudo mantener el globo 3D. Prueba a recargar o usa otro navegador; las listas de lenguas y las páginas siguen funcionando.',
+  gfxReload: 'Recargar',
+  gfxBrowse: 'Todas las lenguas',
   reportKinds: { word: 'Una palabra', name: 'El nombre', place: 'Dónde se habla', family: 'Familia o clasificación', summary: 'El resumen', other: 'Otra cosa' },
   reportWordIs: (c, w) => `La palabra para «${c}»: ${w}`,
 };

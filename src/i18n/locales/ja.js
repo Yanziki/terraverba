@@ -362,6 +362,9 @@ export default {
   feedbackThanks: 'ありがとうございます。ご意見を受け付けました。',
   feedbackButton: '意見を送る',
   feedbackAbout: 'サイトへのご意見や、うまく動かないところはありませんか？ 意見を送るか、{mail} までご連絡ください。',
+  gfxFail: 'このデバイスのブラウザでは 3D の地球儀を表示し続けられませんでした。再読み込みするか、別のブラウザをお試しください。言語の一覧や各ページはそのまま使えます。',
+  gfxReload: '再読み込み',
+  gfxBrowse: 'すべての言語',
   reportKinds: { word: '単語', name: '名称', place: '話されている地域', family: '語族・分類', summary: '解説', other: 'その他' },
   reportWordIs: (c, w) => `「${c}」の語：${w}`,
 };

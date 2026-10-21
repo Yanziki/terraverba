@@ -40,10 +40,16 @@ const landFeature = feature(landAtlas, landAtlas.objects.land);
 //   small  a phone or tablet, or a device with little memory: smaller textures
 //          (iOS also refuses canvases over 16.7 million pixels)
 //   full   everything else
-// ?gfx=low|small|full overrides it (for testing).
+// ?gfx=low|small|full overrides it (for testing). After the browser has
+// dropped the globe's WebGL context and not given it back, the page reloads
+// once in the low tier (sessionStorage glossa-gfx, see bindContextLoss).
+const GFX_KEY = 'glossa-gfx';
 export const GFX = (() => {
   const forced = new URLSearchParams(location.search).get('gfx');
   if (['low', 'small', 'full'].includes(forced)) return forced;
+  try {
+    if (sessionStorage.getItem(GFX_KEY) === 'low') return 'low';
+  } catch {}
   const probe = document.createElement('canvas').getContext('webgl2', { failIfMajorPerformanceCaveat: true });
   let soft = !probe;
   if (probe) {
@@ -313,8 +319,11 @@ export class Globe {
     this.drawnAt = 0;
 
     const low = GFX === 'low';
-    const renderer = new THREE.WebGLRenderer({ antialias: !low, alpha: true });
-    renderer.setPixelRatio(low ? 0.75 : Math.min(window.devicePixelRatio, TINY_MEMORY ? 1.5 : 2));
+    const phone = Math.min(screen.width, screen.height) < 700;
+    // antialiasing only where memory is plentiful: on phones and tablets the
+    // pixels are small enough without it, and it costs several times the screen
+    const renderer = new THREE.WebGLRenderer({ antialias: GFX === 'full', alpha: true });
+    renderer.setPixelRatio(low ? (phone ? 1 : 0.75) : Math.min(window.devicePixelRatio, TINY_MEMORY ? 1.5 : 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     renderer.toneMappingExposure = THEME.exposure;
@@ -426,11 +435,25 @@ export class Globe {
   // back redraw the textures at half the size (their canvases were let go).
   bindContextLoss() {
     const canvas = this.renderer.domElement;
+    let waiting = 0;
     canvas.addEventListener('webglcontextlost', (e) => {
       e.preventDefault();
       canvas.style.visibility = 'hidden';
+      // Chrome on Android often never gives the context back: start again,
+      // once, with the lightest globe; if even that is lost, say so
+      clearTimeout(waiting);
+      waiting = setTimeout(() => {
+        let tried = false;
+        try {
+          tried = sessionStorage.getItem(GFX_KEY) === 'low';
+          if (!tried) sessionStorage.setItem(GFX_KEY, 'low');
+        } catch {}
+        if (!tried && GFX !== 'low') location.reload();
+        else this.onGraphicsFailed?.();
+      }, 3000);
     });
     canvas.addEventListener('webglcontextrestored', () => {
+      clearTimeout(waiting);
       const m = this.sphere.material;
       this.texSize = Math.max(1024, this.texSize / 2);
       this.bumpSize = Math.max(1024, this.bumpSize / 2);

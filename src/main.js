@@ -147,6 +147,15 @@ async function boot() {
     },
   });
   app.globe = globe;
+  // the browser dropped the globe and would not give it back, even in the light tier
+  globe.onGraphicsFailed = () => {
+    if ($('#gfx-fail')) return;
+    const box = document.createElement('div');
+    box.id = 'gfx-fail';
+    box.innerHTML = `<p>${esc(t('gfxFail'))}</p><div class="actions"><button class="btn small" type="button" data-act="reload">${esc(t('gfxReload'))}</button><a class="btn small ghost" href="#/all">${esc(t('gfxBrowse'))}</a></div>`;
+    box.querySelector('[data-act=reload]').onclick = () => location.reload();
+    document.body.append(box);
+  };
   globe.setColors(app.colorOf);
   // labels and relics are HTML overlays, not globe layers
   for (const [name, on] of Object.entries(app.state.layers)) if (name !== 'labels' && name !== 'relics') globe.setLayer(name, on);

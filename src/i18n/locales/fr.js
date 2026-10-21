@@ -362,6 +362,9 @@ export default {
   feedbackThanks: 'Merci ! Votre suggestion a bien été envoyée.',
   feedbackButton: 'Envoyer une suggestion',
   feedbackAbout: 'Une idée pour le site, ou quelque chose qui ne fonctionne pas comme prévu ? Envoyez une suggestion ou écrivez à {mail}.',
+  gfxFail: 'Le navigateur de cet appareil n’a pas pu afficher le globe 3D. Essayez de recharger ou d’utiliser un autre navigateur ; les listes de langues et les pages fonctionnent toujours.',
+  gfxReload: 'Recharger',
+  gfxBrowse: 'Toutes les langues',
   reportKinds: { word: 'Un mot', name: 'Le nom', place: 'Où on la parle', family: 'Famille ou classification', summary: 'Le résumé', other: 'Autre chose' },
   reportWordIs: (c, w) => `Le mot pour « ${c} » : ${w}`,
 };

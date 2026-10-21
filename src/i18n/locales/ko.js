@@ -362,6 +362,9 @@ export default {
   feedbackThanks: '감사합니다. 의견이 전달되었습니다.',
   feedbackButton: '의견 보내기',
   feedbackAbout: '사이트에 대한 생각이나 잘 작동하지 않는 부분이 있나요? 의견을 보내 주시거나 {mail}로 연락해 주세요.',
+  gfxFail: '이 기기의 브라우저에서 3D 지구본을 계속 표시하지 못했습니다. 다시 불러오거나 다른 브라우저를 써 보세요. 언어 목록과 각 페이지는 그대로 쓸 수 있습니다.',
+  gfxReload: '다시 불러오기',
+  gfxBrowse: '모든 언어 보기',
   reportKinds: { word: '단어', name: '이름', place: '사용 지역', family: '어족·분류', summary: '설명', other: '기타' },
   reportWordIs: (c, w) => `'${c}'에 해당하는 말: ${w}`,
 };

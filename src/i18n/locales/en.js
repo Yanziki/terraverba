@@ -363,6 +363,9 @@ export default {
   feedbackThanks: 'Thank you — your suggestion has been sent.',
   feedbackButton: 'Send a suggestion',
   feedbackAbout: 'Ideas for the site, or something that does not work as it should? Send a suggestion, or write to {mail}.',
+  gfxFail: 'This browser could not keep the 3D globe running on this device. Reloading may help, or try another browser; the language lists and pages still work.',
+  gfxReload: 'Reload',
+  gfxBrowse: 'All languages',
   reportKinds: { word: 'A word', name: 'The name', place: 'Where it is spoken', family: 'Family or classification', summary: 'The summary', other: 'Something else' },
   reportWordIs: (c, w) => `The word for “${c}”: ${w}`,
 };

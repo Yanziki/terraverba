@@ -3,10 +3,12 @@
 //   node tools/relics-default.mjs <base>
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 
 const base = process.argv[2] ?? 'http://localhost:5173';
 fs.mkdirSync('.shots/relics', { recursive: true });
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 const bytes = { img: 0, n: 0 };
 page.on('response', async (r) => {

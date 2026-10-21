@@ -3,9 +3,11 @@
 // 100 ms, and each time a label goes away and comes back counts as a flicker.
 //   node tools/label-stability.mjs <base> [seconds]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [base = 'http://localhost:5173', secs = '6'] = process.argv.slice(2);
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 await page.goto(`${base}/?lang=en#/?sel=@45,10,1`, { waitUntil: 'networkidle0', timeout: 120000 });

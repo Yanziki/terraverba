@@ -1,6 +1,7 @@
 // Screenshot the running site in headless Chrome (macOS, ANGLE/Metal for WebGL).
 //   node tools/shot.mjs <url> <out.png> [width] [height] [waitMs] [js-to-eval]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [url, out, w = '1440', h = '900', wait = '3500', js = ''] = process.argv.slice(2);
 const browser = await puppeteer.launch({
@@ -8,6 +9,7 @@ const browser = await puppeteer.launch({
   headless: 'new',
   args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars'],
 });
+quiet(browser);
 const page = await browser.newPage();
 const logs = [];
 page.on('console', (m) => logs.push(`[${m.type()}] ${m.text()}`));

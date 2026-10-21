@@ -3,6 +3,7 @@
 // compiler, as Edge does in its enhanced security mode for unfamiliar sites.
 //   node tools/perf-probe.mjs <url> [jitless] [phone]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [url, ...flags] = process.argv.slice(2);
 const jitless = flags.includes('jitless');
@@ -11,6 +12,7 @@ const browser = await puppeteer.launch({
   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new',
   args: [...(flags.includes('software') ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist']), ...(jitless ? ['--js-flags=--jitless'] : [])],
 });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport(phone ? { width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 } : { width: 1440, height: 900 });
 if (flags.includes('noblur')) await page.evaluateOnNewDocument(() => document.addEventListener('DOMContentLoaded', () => {

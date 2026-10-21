@@ -1,10 +1,12 @@
 // The mark in place: top bar (both themes), the phone top bar, the loading screen, the favicon.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const dir = '.shots/brand';
 fs.rmSync(dir, { recursive: true, force: true });
 fs.mkdirSync(dir, { recursive: true });
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const errors = [];
 const page = await browser.newPage();
 page.on('pageerror', (e) => errors.push(e.message));

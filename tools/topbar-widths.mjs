@@ -2,8 +2,10 @@
 // the search box wide enough to type in, nav items not squeezed into each other.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 fs.mkdirSync('.shots/topbar', { recursive: true });
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 const bad = [];
 for (const lang of ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'fr', 'de', 'pt', 'ru']) {

@@ -2,9 +2,11 @@
 // no errors), and the link from a language's panel.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const lang = process.argv[2] ?? 'zh-Hans';
 const story = process.argv[3] ?? 'people';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

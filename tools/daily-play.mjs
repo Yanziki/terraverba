@@ -3,8 +3,10 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import { answer } from './daily-answer.mjs';
+import { quiet } from './quiet.mjs';
 const [rounds = 3, width = 1440, locale = 'zh-Hans'] = process.argv.slice(2);
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

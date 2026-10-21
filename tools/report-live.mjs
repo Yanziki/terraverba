@@ -2,12 +2,14 @@
 // included, and report what the endpoint answered.
 //   node tools/report-live.mjs https://preview.terraverba.pages.dev [locale] [light]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [base, loc = 'en', light] = process.argv.slice(2);
 const browser = await puppeteer.launch({
   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new',
   args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'],
 });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 const errors = [];

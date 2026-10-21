@@ -1,7 +1,9 @@
 // Hearing words: the words page list and tour, the language panel, playback.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

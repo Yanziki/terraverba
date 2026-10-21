@@ -3,11 +3,13 @@
 // and the link opened by someone else (the friend banner).
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const dir = '.shots/passport2';
 fs.rmSync(dir, { recursive: true, force: true });
 fs.mkdirSync(dir, { recursive: true });
 const lang = process.argv[2] ?? 'zh-Hans';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--accept-lang=zh-CN,en-US,ja'] });
+quiet(browser);
 const errors = [];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const watch = (page) => {

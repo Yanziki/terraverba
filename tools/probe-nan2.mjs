@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal'] });
+quiet(browser);
 const page = await browser.newPage();
 await page.evaluateOnNewDocument(() => {
   const orig = Element.prototype.setAttribute;

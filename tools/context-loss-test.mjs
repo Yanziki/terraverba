@@ -3,9 +3,11 @@
 // draw the globe again, with smaller textures, once restored.
 //   node tools/context-loss-test.mjs <base>
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const base = process.argv[2] ?? 'http://localhost:5173';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

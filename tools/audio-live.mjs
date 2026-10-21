@@ -3,12 +3,14 @@
 // blocked, so every play must come from the mirror.
 //   node tools/audio-live.mjs https://preview.terraverba.pages.dev [nocommons]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [base, mode] = process.argv.slice(2);
 const browser = await puppeteer.launch({
   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new',
   args: ['--autoplay-policy=no-user-gesture-required'],
 });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 const errors = [];

@@ -2,11 +2,13 @@
 // "listen to all" started and stopped, no errors; screenshots in .shots/storyaudio/.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const dir = '.shots/storyaudio';
 fs.rmSync(dir, { recursive: true, force: true });
 fs.mkdirSync(dir, { recursive: true });
 const lang = process.argv[2] ?? 'zh-Hans';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 const played = [];

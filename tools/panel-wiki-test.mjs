@@ -3,9 +3,11 @@
 // the stored copies (public/data/wiki) must stand in.
 //   node tools/panel-wiki-test.mjs <base> <id,id> [nowiki]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const [base, ids, mode] = process.argv.slice(2);
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 await page.setRequestInterception(true);

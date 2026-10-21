@@ -4,10 +4,12 @@
 //   node tools/phone-drawers.mjs <base>
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 
 const base = process.argv[2] ?? 'http://localhost:5173';
 fs.mkdirSync('.shots/phone', { recursive: true });
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

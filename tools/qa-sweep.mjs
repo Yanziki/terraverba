@@ -6,6 +6,7 @@
 //   BASE=https://preview.terraverba.pages.dev node tools/qa-sweep.mjs …   (a deployed build)
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 
 const LOCALES = process.argv.slice(2).length ? process.argv.slice(2) : ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'fr', 'de', 'pt', 'ru'];
 if (!LOCALES.includes('en')) LOCALES.unshift('en');
@@ -26,11 +27,12 @@ const browser = await puppeteer.launch({
   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new',
   args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars'],
 });
+quiet(browser);
 const page = await browser.newPage();
 let errors = [];
 page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
 page.on('console', (m) => m.type() === 'error' && errors.push(`console: ${m.text()}`));
-page.on('requestfailed', (r) => !/wikipedia|wikimedia/.test(r.url()) && errors.push(`failed: ${r.url()}`));
+page.on('requestfailed', (r) => !/wikipedia|wikimedia|cloudflareinsights/.test(r.url()) && errors.push(`failed: ${r.url()}`));
 page.on('response', (r) => r.status() >= 400 && !/wikipedia|wikimedia/.test(r.url()) && errors.push(`${r.status()}: ${r.url()}`));
 
 const english = {};

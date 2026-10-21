@@ -1,10 +1,12 @@
 // The home page at several window heights: the hero must stay clear of the top bar.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
+import { quiet } from './quiet.mjs';
 const dir = '.shots/hero';
 fs.rmSync(dir, { recursive: true, force: true });
 fs.mkdirSync(dir, { recursive: true });
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 const out = [];
 for (const lang of ['zh-Hans', 'en', 'ru']) {

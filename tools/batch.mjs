@@ -2,6 +2,7 @@
 // spec: [{ name, url, w, h, wait, js }]
 import puppeteer from 'puppeteer-core';
 import { readFileSync } from 'fs';
+import { quiet } from './quiet.mjs';
 
 const specs = JSON.parse(readFileSync(process.argv[2], 'utf8'));
 const browser = await puppeteer.launch({
@@ -9,6 +10,7 @@ const browser = await puppeteer.launch({
   headless: 'new',
   args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars'],
 });
+quiet(browser);
 // a few tabs at a time: WebGL pages starve each other otherwise
 const shoot = async (s) => {
   const page = await browser.newPage();

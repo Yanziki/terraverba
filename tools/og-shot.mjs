@@ -3,7 +3,9 @@
 // the English pages, og-zh.jpg for the Chinese pages.
 //   node tools/og-shot.mjs   (dev server on :5173; writes public/og*.png, convert with sips)
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 2 });
 for (const [lang, out] of [['en', 'og'], ['zh-Hans', 'og-zh']]) {

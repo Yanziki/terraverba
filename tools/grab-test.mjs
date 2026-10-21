@@ -2,9 +2,11 @@
 // with a "grab" feel it lands under the pointer again.
 //   node tools/grab-test.mjs <base>
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 
 const base = process.argv[2] ?? 'http://localhost:5173';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+quiet(browser);
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

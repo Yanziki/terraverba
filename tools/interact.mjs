@@ -1,7 +1,9 @@
 // Smoke test: hover/click a dot, click a place, search, switch view and
 // interface language, then visit every route and collect page errors.
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal'] });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

@@ -1,7 +1,9 @@
 // Full-page screenshot of a page under tools/: node tools/shot-page.mjs <page.html> <name>
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 const [page_, out] = process.argv.slice(2);
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

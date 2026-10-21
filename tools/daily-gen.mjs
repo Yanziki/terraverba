@@ -2,7 +2,9 @@
 // steps as build() in src/ui/daily.js) and report failures, tier fallbacks and
 // sample questions per tier: node tools/daily-gen.mjs [days] [locale]
 import puppeteer from 'puppeteer-core';
+import { quiet } from './quiet.mjs';
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new' });
+quiet(browser);
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));

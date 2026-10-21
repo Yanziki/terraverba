@@ -545,7 +545,7 @@ export function createSpace(app) {
   }
 
   function cloud3d(stage, sim, pts) {
-    const renderer = new THREE.WebGLRenderer({ antialias: GFX === 'full', alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: GFX !== 'low', alpha: true });
     renderer.setPixelRatio(GFX === 'low' ? 1 : Math.min(2, window.devicePixelRatio));
     stage.prepend(renderer.domElement);
     const scene = new THREE.Scene();

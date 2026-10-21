@@ -319,11 +319,11 @@ export class Globe {
     this.drawnAt = 0;
 
     const low = GFX === 'low';
-    // a phone screen, unless the full tier is asked for (?gfx=full, as the film does)
-    const phone = GFX !== 'full' && Math.min(screen.width, screen.height) < 700;
-    // antialiasing only where memory is plentiful: on phones and tablets the
-    // pixels are small enough without it, and it costs several times the screen
-    const renderer = new THREE.WebGLRenderer({ antialias: GFX === 'full', alpha: true });
+    // in the low tier a phone's screen keeps one device pixel per CSS pixel (0.75 would blur it)
+    const phone = Math.min(screen.width, screen.height) < 700;
+    // phones keep their full look; one whose browser drops the globe falls back
+    // to the low tier for the rest of the visit (bindContextLoss)
+    const renderer = new THREE.WebGLRenderer({ antialias: !low, alpha: true });
     renderer.setPixelRatio(low ? (phone ? 1 : 0.75) : Math.min(window.devicePixelRatio, TINY_MEMORY ? 1.5 : 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
@@ -334,9 +334,8 @@ export class Globe {
     const scene = new THREE.Scene();
     this.scene = scene;
     // the varnish reflects a soft room; without acceleration there is no varnish
-    // (not on phones either: building it is among the heaviest things a small GPU is asked to do)
     this.environment = () => {
-      if (low || phone) return;
+      if (low) return;
       scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
       scene.environmentIntensity = 0.35;
     };
@@ -374,8 +373,8 @@ export class Globe {
 
     // texture widths (the map is twice as wide as it is tall)
     const maxTex = renderer.capabilities.maxTextureSize;
-    this.texSize = Math.min(maxTex, low || TINY_MEMORY ? 2048 : phone ? 3072 : GFX === 'small' || window.devicePixelRatio < 1.5 ? 4096 : 8192);
-    this.bumpSize = Math.min(maxTex, GFX === 'full' ? 4096 : phone ? 1024 : 2048);
+    this.texSize = Math.min(maxTex, low || TINY_MEMORY ? 2048 : GFX === 'small' || window.devicePixelRatio < 1.5 ? 4096 : 8192);
+    this.bumpSize = Math.min(maxTex, GFX === 'full' ? 4096 : 2048);
     this.regionSize = Math.min(maxTex, GFX === 'full' ? 4096 : 2048);
     const mapTexture = canvasTexture(drawMap(this.texSize), THREE.SRGBColorSpace);
     mapTexture.anisotropy = low ? 1 : renderer.capabilities.getMaxAnisotropy();

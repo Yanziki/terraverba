@@ -60,11 +60,14 @@ export function createRelics(app) {
     const { globe } = app;
     for (const pin of shown) {
       const p = globe.project(pin.at, 0.04);
+      // gone behind the globe: away at once (a fade would leave it where it was)
       if (!p) {
         pin.el.style.opacity = 0;
+        pin.el.style.visibility = 'hidden';
         continue;
       }
       // fade toward the limb of the globe, as the labels do
+      pin.el.style.visibility = '';
       pin.el.style.opacity = Math.min(1, (p.facing - 0.3) * 2.2).toFixed(2);
       pin.el.style.transform = `translate(${(p.x - SIZE / 2).toFixed(1)}px, ${(p.y - SIZE - STEM).toFixed(1)}px)`;
       pin.el.classList.toggle('on', pin.r.id === selected);

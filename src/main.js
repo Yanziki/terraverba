@@ -264,8 +264,11 @@ async function boot() {
     near.classList.toggle('over-strip', strip);
     // the key sits where the sheets open, so it steps aside for them
     layers.show(!app.state.hero && !sheetOn && !pageOn && !(isNarrow() && panelOn));
+    const wasPaused = globe.paused;
     globe.paused = pageOn || (sheetOn && app.state.treeFull);
     document.body.classList.toggle('page-open', globe.paused);
+    // back from a full page: the pins are placed afresh for the globe as it is now
+    if (wasPaused && !globe.paused) relics.update(true);
   };
   window.addEventListener('resize', () => app.layout());
 

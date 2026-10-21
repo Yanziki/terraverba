@@ -249,7 +249,9 @@ ${LOCALES.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${abs(l, 
 <meta property="og:site_name" content="Terraverba">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0e13">
+<link rel="icon" href="${rootRel()}favicon.ico" sizes="48x48">
 <link rel="icon" href="${rootRel()}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${rootRel()}apple-touch-icon.png">
 <link rel="stylesheet" href="${rootRel()}assets/pages.css">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>`).join('\n')}
 </head>
@@ -697,9 +699,35 @@ if (!fs.existsSync(path.join(OUT, 'index.html'))) throw new Error('run `vite bui
 {
   const file = path.join(OUT, 'index.html');
   const html = fs.readFileSync(file, 'utf8')
-    .replace(/<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${SITE}/og.jpg" />\n    <meta property="og:url" content="${SITE}/" />\n    <link rel="canonical" href="${SITE}/" />`);
+    .replace(/<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${SITE}/og.jpg" />\n    <meta property="og:url" content="${SITE}/" />\n    <link rel="canonical" href="${SITE}/" />`)
+    // the site's name in search results (Google reads it from the home page)
+    .replace('</head>', `  <meta property="og:site_name" content="Terraverba" />\n    <script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'WebSite', name: 'Terraverba', alternateName: ['Terraverba · An atlas of the world’s languages', '世界语言地图集'], url: `${SITE}/`,
+    })}</script>\n  </head>`);
   fs.writeFileSync(file, html);
 }
+// an address that does not exist gets a real 404 (without this file, Pages answers every
+// unknown path with the atlas itself, which search engines count as duplicate pages)
+fs.writeFileSync(path.join(OUT, '404.html'), `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found · Terraverba</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/pages.css">
+</head>
+<body>
+<main class="page">
+<h1>Page not found</h1>
+<p class="lede">There is nothing at this address. <a href="/">Open the atlas</a> or <a href="/languages/">browse the languages</a>.</p>
+<p class="lede" lang="zh-Hans">这个地址没有页面。<a href="/?lang=zh-Hans">打开地图集</a>，或者<a href="/zh/languages/">浏览语言目录</a>。</p>
+</main>
+</body>
+</html>
+`);
 for (const dir of ['languages', 'families', 'words', 'features', 'stories', 'zh']) fs.rmSync(path.join(OUT, dir), { recursive: true, force: true });
 fs.writeFileSync(path.join(OUT, 'assets', 'world.svg'), worldSvg());
 fs.writeFileSync(path.join(OUT, 'assets', 'pages.css'), stylesheet());

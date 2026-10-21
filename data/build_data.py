@@ -84,6 +84,12 @@ NAME_OVERRIDE = {
                  "ru": "Японский и иланьский креольский"},
     "japa1256": {"ja": "日本語派", "ko": "일본어파", "es": "Lenguas japonesas", "fr": "Langues japonaises", "de": "Japanische Sprachen",
                  "pt": "Línguas japonesas", "ru": "Японские языки"},
+    # major languages whose Wikidata entry lacks a label in these interface languages
+    "stan1318": {"es": "Árabe estándar", "pt": "Árabe padrão", "ru": "Литературный арабский язык"},
+    "west2369": {"es": "Persa iraní", "pt": "Persa iraniano"},
+    "indo1316": {"ja": "インドネシア語", "ko": "인도네시아어", "es": "Indonesio", "fr": "Indonésien", "de": "Indonesisch", "pt": "Indonésio"},
+    "swah1253": {"ko": "스와힐리어", "pt": "Suaíli"},
+    "nort2690": {"ja": "ウズベク語（北部）", "ko": "우즈베크어(북부)", "es": "Uzbeko septentrional", "pt": "Usbeque setentrional"},
 }
 # Traditional-script names that are not just the Simplified ones converted
 ZH_HANT_OVERRIDE = {"mand1415": "官話（華語）"}

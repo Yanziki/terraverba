@@ -872,9 +872,25 @@ export class Globe {
     this.flyTo(lat, lon, clamp(1 + spread * 2.6, minDist, maxDist), duration);
   }
 
-  setViewOffset(x, y) {
-    this.offset = { x, y };
-    this.resize();
+  // where the picture's centre sits on screen; when a panel slides in or out
+  // it glides there with the panel (at once if asked, or before the first frame)
+  setViewOffset(x, y, glide = true) {
+    const to = { x, y };
+    const target = this.offsetGlide?.to ?? this.offset;
+    if (Math.abs(target.x - x) < 0.5 && Math.abs(target.y - y) < 0.5) return;
+    if (!glide || !this.drawnAt) {
+      this.offsetGlide = null;
+      this.offset = to;
+      this.applyOffset();
+      return;
+    }
+    this.offsetGlide = { from: { ...this.offset }, to, t0: performance.now(), dur: 480 };
+  }
+
+  applyOffset() {
+    this.camera.setViewOffset(this.width, this.height, -this.offset.x, -this.offset.y, this.width, this.height);
+    this.camera.updateProjectionMatrix();
+    this.labelsDirty = true;
   }
 
   resize() {
@@ -1060,6 +1076,15 @@ export class Globe {
     }
     if (GFX !== 'low' && this.mode === '3d' && !this.controls.autoRotate && !this.flight && !this.morph && now - this.lastInteraction > 45000 && !this.focus) {
       this.controls.autoRotate = true;
+    }
+
+    if (this.offsetGlide) {
+      const { from, to, t0, dur } = this.offsetGlide;
+      const k = clamp((now - t0) / dur, 0, 1);
+      const e = 1 - Math.pow(1 - k, 3);
+      this.offset = { x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e };
+      this.applyOffset();
+      if (k >= 1) this.offsetGlide = null;
     }
 
     const f = this.flat;

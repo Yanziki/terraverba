@@ -365,6 +365,10 @@ export default {
   gfxFail: 'Der Browser auf diesem Gerät konnte den 3D-Globus nicht anzeigen. Laden Sie neu oder versuchen Sie einen anderen Browser; Sprachlisten und Seiten funktionieren weiterhin.',
   gfxReload: 'Neu laden',
   gfxBrowse: 'Alle Sprachen',
+  gfxNone: 'Dieser Browser kann gerade keine 3D-Grafik nutzen, deshalb lässt sich der Globus nicht anzeigen. Die Textfassung des Atlas funktioniert weiterhin. Bei Chrome auf Android hilft es meist, Chrome ganz zu schließen und neu zu öffnen.',
+  gfxCatalogue: 'Zum Sprachverzeichnis',
+  loadFail: 'Beim Laden ist etwas schiefgegangen. Bitte laden Sie die Seite neu.',
+  gfxChromeHint: ' Bei Chrome auf Android hilft es meist, Chrome ganz zu schließen und neu zu öffnen.',
   reportKinds: { word: 'Ein Wort', name: 'Der Name', place: 'Wo sie gesprochen wird', family: 'Familie oder Einordnung', summary: 'Die Zusammenfassung', other: 'Etwas anderes' },
   reportWordIs: (c, w) => `Das Wort für „${c}“: ${w}`,
 };

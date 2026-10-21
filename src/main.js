@@ -152,7 +152,7 @@ async function boot() {
     if ($('#gfx-fail')) return;
     const box = document.createElement('div');
     box.id = 'gfx-fail';
-    box.innerHTML = `<p>${esc(t('gfxFail'))}</p><div class="actions"><button class="btn small" type="button" data-act="reload">${esc(t('gfxReload'))}</button><a class="btn small ghost" href="#/all">${esc(t('gfxBrowse'))}</a></div>`;
+    box.innerHTML = `<p>${esc(t('gfxFail'))}${esc(t('gfxChromeHint'))}</p><div class="actions"><button class="btn small" type="button" data-act="reload">${esc(t('gfxReload'))}</button><a class="btn small ghost" href="#/all">${esc(t('gfxBrowse'))}</a></div>`;
     box.querySelector('[data-act=reload]').onclick = () => location.reload();
     document.body.append(box);
   };
@@ -577,4 +577,19 @@ async function boot() {
   window.__glossa = app;
 }
 
-boot();
+// a start that fails (most often: no WebGL at all) must not leave the loading screen up
+function failed(err) {
+  console.error(err);
+  const probe = document.createElement('canvas');
+  const webgl = !!(probe.getContext('webgl2') || probe.getContext('webgl'));
+  const zh = (document.documentElement.lang || '').startsWith('zh') || /^zh/.test(detectLocale());
+  const index = `${import.meta.env.BASE_URL}${zh ? 'zh/' : ''}languages/`;
+  $('#loading')?.classList.add('off');
+  const box = document.createElement('div');
+  box.id = 'gfx-fail';
+  box.innerHTML = `<p>${esc(t(webgl ? 'loadFail' : 'gfxNone'))}</p><div class="actions">${webgl ? '' : `<a class="btn small" href="${index}">${esc(t('gfxCatalogue'))}</a>`}<button class="btn small ghost" type="button">${esc(t('gfxReload'))}</button></div>`;
+  box.querySelector('button').onclick = () => location.reload();
+  document.body.append(box);
+}
+
+boot().catch(failed);

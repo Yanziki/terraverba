@@ -365,6 +365,10 @@ export default {
   gfxFail: '이 기기의 브라우저에서 3D 지구본을 계속 표시하지 못했습니다. 다시 불러오거나 다른 브라우저를 써 보세요. 언어 목록과 각 페이지는 그대로 쓸 수 있습니다.',
   gfxReload: '다시 불러오기',
   gfxBrowse: '모든 언어 보기',
+  gfxNone: '이 브라우저는 지금 3D 그래픽을 쓸 수 없어서 지구본을 표시하지 못합니다. 텍스트판 언어 목록은 볼 수 있습니다. Android의 Chrome이라면 Chrome을 완전히 종료했다가 다시 열면 대개 다시 됩니다.',
+  gfxCatalogue: '언어 목록 보기',
+  loadFail: '불러오는 중에 문제가 생겼습니다. 페이지를 다시 불러와 주세요.',
+  gfxChromeHint: 'Android의 Chrome이라면 Chrome을 완전히 종료했다가 다시 열면 대개 다시 됩니다.',
   reportKinds: { word: '단어', name: '이름', place: '사용 지역', family: '어족·분류', summary: '설명', other: '기타' },
   reportWordIs: (c, w) => `'${c}'에 해당하는 말: ${w}`,
 };

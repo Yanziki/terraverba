@@ -365,6 +365,10 @@ export default {
   gfxFail: 'このデバイスのブラウザでは 3D の地球儀を表示し続けられませんでした。再読み込みするか、別のブラウザをお試しください。言語の一覧や各ページはそのまま使えます。',
   gfxReload: '再読み込み',
   gfxBrowse: 'すべての言語',
+  gfxNone: 'このブラウザは現在 3D グラフィックスを使えないため、地球儀を表示できません。テキスト版の言語目録はご覧いただけます。Android の Chrome なら、Chrome を完全に終了して開き直すと、たいてい元に戻ります。',
+  gfxCatalogue: '言語目録を見る',
+  loadFail: '読み込み中に問題が起きました。ページを再読み込みしてください。',
+  gfxChromeHint: 'Android の Chrome なら、Chrome を完全に終了して開き直すと、たいてい元に戻ります。',
   reportKinds: { word: '単語', name: '名称', place: '話されている地域', family: '語族・分類', summary: '解説', other: 'その他' },
   reportWordIs: (c, w) => `「${c}」の語：${w}`,
 };

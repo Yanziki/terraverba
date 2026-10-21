@@ -365,6 +365,10 @@ export default {
   gfxFail: 'O navegador deste aparelho não conseguiu manter o globo 3D. Tente recarregar ou usar outro navegador; as listas de línguas e as páginas continuam funcionando.',
   gfxReload: 'Recarregar',
   gfxBrowse: 'Todas as línguas',
+  gfxNone: 'Este navegador não consegue usar gráficos 3D agora, então o globo não pode ser exibido. A versão em texto do atlas continua funcionando. Com o Chrome no Android, fechar o Chrome completamente e abrir de novo costuma trazer o 3D de volta.',
+  gfxCatalogue: 'Ver o índice de línguas',
+  loadFail: 'Algo deu errado ao carregar. Recarregue a página.',
+  gfxChromeHint: ' Com o Chrome no Android, fechar o Chrome completamente e abrir de novo costuma ajudar.',
   reportKinds: { word: 'Uma palavra', name: 'O nome', place: 'Onde é falada', family: 'Família ou classificação', summary: 'O resumo', other: 'Outra coisa' },
   reportWordIs: (c, w) => `A palavra para “${c}”: ${w}`,
 };

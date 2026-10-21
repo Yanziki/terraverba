@@ -545,7 +545,7 @@ export function createSpace(app) {
   }
 
   function cloud3d(stage, sim, pts) {
-    const renderer = new THREE.WebGLRenderer({ antialias: GFX !== 'low', alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: GFX === 'full', alpha: true });
     renderer.setPixelRatio(GFX === 'low' ? 1 : Math.min(2, window.devicePixelRatio));
     stage.prepend(renderer.domElement);
     const scene = new THREE.Scene();
@@ -725,6 +725,8 @@ export function createSpace(app) {
       dispose() {
         renderer.setAnimationLoop(null);
         renderer.dispose();
+        // give the GPU its memory back now, not when the page is closed
+        renderer.forceContextLoss();
         window.removeEventListener('resize', resize);
       },
     };

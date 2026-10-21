@@ -366,6 +366,10 @@ export default {
   gfxFail: 'This browser could not keep the 3D globe running on this device. Reloading may help, or try another browser; the language lists and pages still work.',
   gfxReload: 'Reload',
   gfxBrowse: 'All languages',
+  gfxNone: 'This browser cannot use 3D graphics right now, so the globe cannot be shown. The text version of the atlas still works. With Chrome on Android, closing Chrome completely and opening it again usually brings 3D back.',
+  gfxCatalogue: 'Browse the language index',
+  loadFail: 'Something went wrong while loading. Please reload the page.',
+  gfxChromeHint: ' With Chrome on Android, closing Chrome completely and opening it again usually helps.',
   reportKinds: { word: 'A word', name: 'The name', place: 'Where it is spoken', family: 'Family or classification', summary: 'The summary', other: 'Something else' },
   reportWordIs: (c, w) => `The word for “${c}”: ${w}`,
 };

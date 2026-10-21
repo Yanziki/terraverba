@@ -365,6 +365,10 @@ export default {
   gfxFail: '這台裝置上的瀏覽器沒能把 3D 地球顯示出來。可以重新載入試試，或者換一個瀏覽器；語言列表和各個頁面仍然可以正常使用。',
   gfxReload: '重新載入',
   gfxBrowse: '瀏覽全部語言',
+  gfxNone: '這個瀏覽器現在無法使用 3D 圖形，所以地球顯示不出來。可以先瀏覽文字版的語言目錄。如果是 Android 手機上的 Chrome，把 Chrome 完全關掉再開啟，通常就能恢復。',
+  gfxCatalogue: '瀏覽語言目錄',
+  loadFail: '載入時出了點問題，請重新載入頁面。',
+  gfxChromeHint: '如果是 Android 手機上的 Chrome，把 Chrome 完全關掉再開啟，通常就能恢復。',
   reportKinds: { word: '某個詞', name: '名稱', place: '使用地區', family: '譜系 / 分類', summary: '簡介', other: '其他' },
   reportWordIs: (c, w) => `「${c}」這個詞：${w}`,
 };

@@ -365,6 +365,10 @@ export default {
   gfxFail: '这台设备上的浏览器没能把 3D 地球显示出来。可以重新加载试试，或者换一个浏览器；语言列表和各个页面仍然可以正常使用。',
   gfxReload: '重新加载',
   gfxBrowse: '浏览全部语言',
+  gfxNone: '这个浏览器现在无法使用 3D 图形，所以地球显示不出来。可以先浏览文字版的语言目录。如果是安卓手机上的 Chrome，把 Chrome 完全关掉再打开，通常就能恢复。',
+  gfxCatalogue: '浏览语言目录',
+  loadFail: '加载时出了点问题，请重新加载页面。',
+  gfxChromeHint: '如果是安卓手机上的 Chrome，把 Chrome 完全关掉再打开，通常就能恢复。',
   reportKinds: { word: '某个词', name: '名称', place: '使用地区', family: '谱系 / 分类', summary: '简介', other: '其他' },
   reportWordIs: (c, w) => `“${c}”这个词：${w}`,
 };

@@ -243,6 +243,7 @@ export default {
     <p>Avec huit mille langues, il y aura des erreurs. Chaque fiche de langue et chaque carte des mots propose un lien pour en signaler une ; les corrections de celles et ceux qui connaissent une langue sont notre meilleure source.</p>
     <h3>Logiciel libre</h3>
     <p>Terraverba est gratuit et libre. Le code est sous licence MIT ; les textes écrits pour le site et les données qu’il rassemble sont sous CC BY-SA 4.0, car ils s’appuient sur le Wiktionnaire, Wikipédia et PHOIBLE ; les contenus de tiers gardent leur propre licence (voir les sources). Le nom et le logo ne font pas partie de la licence.</p>
+    <p>Code source et scripts de données : <a href="https://github.com/Yanziki/terraverba" target="_blank" rel="noopener">github.com/Yanziki/terraverba</a></p>
     <h3>Vie privée</h3>
     <p>Les visites sont comptées avec Cloudflare Web Analytics, qui n’utilise pas de cookies et ne suit personne d’un site à l’autre. Votre passeport, avec le nom et la photo que vous y mettez, reste dans ce navigateur. Les corrections que vous envoyez sont conservées pour être vérifiées ; laisser un contact est facultatif, et il n’est jamais publié.</p>`,
 

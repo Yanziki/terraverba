@@ -17,6 +17,7 @@ const ABOUT = {
     <p>With eight thousand languages there will be mistakes. Every language panel and word map has a link to report one; corrections from people who know a language are the best source we have.</p>
     <h3>Open source</h3>
     <p>Terraverba is free and open source. The code is under the MIT licence; the texts written for the site and the data it compiles are under CC BY-SA 4.0, as they build on Wiktionary, Wikipedia and PHOIBLE; third-party material keeps its own licence (see Sources). The name and logo are not part of the licence.</p>
+    <p>Source code and data scripts: <a href="https://github.com/Yanziki/terraverba" target="_blank" rel="noopener">github.com/Yanziki/terraverba</a></p>
     <h3>Privacy</h3>
     <p>Visits are counted with Cloudflare Web Analytics, which uses no cookies and does not follow anyone from site to site. Your passport, with the name and photo you put on it, stays in this browser. A correction you send is kept so it can be checked; leaving contact details is optional, and they are never published.</p>`,
   zh: `
@@ -33,6 +34,7 @@ const ABOUT = {
     <p>八千种语言，难免有错。每种语言的详情和词语地图里都有“报告错误”的入口；懂这门语言的人提出的修正，是我们最好的资料来源。</p>
     <h3>开源</h3>
     <p>本站完全免费、开源。代码采用 MIT 许可；本站撰写的文字和整理出的数据采用 CC BY-SA 4.0，因为其中用到了维基词典、维基百科和 PHOIBLE 的内容；第三方素材保留各自的许可（见“数据来源”）。“Terraverba”这个名称和标志不在许可范围内。</p>
+    <p>源代码和数据处理脚本：<a href="https://github.com/Yanziki/terraverba" target="_blank" rel="noopener">github.com/Yanziki/terraverba</a></p>
     <h3>隐私</h3>
     <p>访问量由 Cloudflare Web Analytics 统计，它不使用 cookie，也不会跨网站追踪任何人。语言护照以及你放在上面的姓名和照片，只保存在这个浏览器里。你提交的纠错会保存下来以便核对；联系方式可以不填，填了也绝不公开。</p>`,
 };

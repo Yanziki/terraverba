@@ -128,7 +128,7 @@ const STR = {
     cite: 'Cite', sources: 'Sources', elsewhere: 'Elsewhere', glottolog: 'Glottolog', wikipedia: 'Wikipedia',
     langTitle: (n) => `${n}: where it’s spoken, family and words · Terraverba`, familyTitle: (n) => `${n} languages: map and family tree · Terraverba`,
     footer: 'Terraverba is an atlas of the world’s languages. Languages, families, locations and endangerment: Glottolog 5.3 (CC BY 4.0). Summaries: Wikipedia (CC BY-SA 4.0). Words: Wiktionary (CC BY-SA 4.0) and ASJP (CC BY 4.0). Features: Grambank (CC BY 4.0) and PHOIBLE (CC BY-SA 3.0). Writing samples: UDHR in Unicode.',
-    about: 'About Terraverba', and: 'and',
+    about: 'About Terraverba', source: 'Source code', and: 'and',
     stories: 'Stories', storiesTitle: 'Stories of the world’s languages', storiesLede: 'Guided tours of the globe: how one word took two roads, the people who made scripts and saved languages, the words that need a whole sentence elsewhere…',
     readOnGlobe: 'Read it on the globe', chapterN: (n) => `Chapter ${n}`, chapters: (n) => `${n} chapters`,
   },
@@ -150,7 +150,7 @@ const STR = {
     cite: '引用', sources: '资料来源', elsewhere: '其他资料', glottolog: 'Glottolog', wikipedia: '维基百科',
     langTitle: (n) => `${n}：分布、谱系与常用词 · Terraverba 世界语言地图集`, familyTitle: (n) => `${n}：分布地图与语言树 · Terraverba 世界语言地图集`,
     footer: 'Terraverba 是一部世界语言地图集。语言、谱系、位置与濒危程度：Glottolog 5.3（CC BY 4.0）。简介：维基百科（CC BY-SA 4.0）。词语：维基词典（CC BY-SA 4.0）与 ASJP（CC BY 4.0）。语言特征：Grambank（CC BY 4.0）与 PHOIBLE（CC BY-SA 3.0）。文字样例：UDHR in Unicode。',
-    about: '关于 Terraverba', and: '和',
+    about: '关于 Terraverba', source: '源代码', and: '和',
     stories: '故事', storiesTitle: '世界语言的故事', storiesLede: '跟着地球仪读故事：一个字怎样走了两条路，造字和拯救语言的人，换一种语言就要用一整句话来解释的词……',
     readOnGlobe: '在地球仪上阅读', chapterN: (n) => `第 ${n} 章`, chapters: (n) => `${n} 章`,
   },
@@ -264,7 +264,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
 <main class="page">
 ${body}
 </main>
-<footer class="foot"><p>${esc(loc.s.footer)}</p><p><a href="${app('about')}">${loc.s.about}</a></p></footer>
+<footer class="foot"><p>${esc(loc.s.footer)}</p><p><a href="${app('about')}">${loc.s.about}</a> · <a href="https://github.com/Yanziki/terraverba">${loc.s.source}</a></p></footer>
 </body>
 </html>
 `;

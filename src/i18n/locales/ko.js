@@ -355,6 +355,13 @@ export default {
   reportThanks: '감사합니다. 확인하겠습니다.',
   reportFailed: '보내지 못했습니다. 내용을 복사해 주세요.',
   reportVerify: '먼저 위의 사람 확인을 완료해 주세요.',
+  feedbackLink: '의견·제안',
+  feedbackTitle: '이 사이트에 대한 의견',
+  feedbackIntro: '있었으면 하는 기능, 쓰기 불편한 점, 그 밖에 사이트에 대한 어떤 생각이든 알려 주세요. 모두 꼼꼼히 읽습니다.',
+  feedbackNote: '의견',
+  feedbackThanks: '감사합니다. 의견이 전달되었습니다.',
+  feedbackButton: '의견 보내기',
+  feedbackAbout: '사이트에 대한 생각이나 잘 작동하지 않는 부분이 있나요? 의견을 보내 주시거나 {mail}로 연락해 주세요.',
   reportKinds: { word: '단어', name: '이름', place: '사용 지역', family: '어족·분류', summary: '설명', other: '기타' },
   reportWordIs: (c, w) => `'${c}'에 해당하는 말: ${w}`,
 };

@@ -1,5 +1,6 @@
 // "Report an error": a small dialog that turns what a reader knows about a
 // language into a structured correction. Where it goes is set in config.js.
+// Opened with { general: true } it takes a suggestion about the site itself.
 import { REPORT } from '../config.js';
 import { t, getLocale } from '../i18n/index.js';
 import { esc, icon } from './html.js';
@@ -28,9 +29,10 @@ export function createReport(app) {
     const l = ctx.lang ? data.byId.get(ctx.lang) : null;
     return {
       kind: form.kind.value,
+      general: !!ctx.general,
       language: l ? { id: l.id, name: l.en, shown: app.name(l) } : null,
       word: ctx.concept ? { concept: ctx.concept, shown: ctx.word ?? null } : null,
-      fix: form.fix.value.trim(),
+      fix: form.fix?.value.trim() ?? '',
       note: form.note.value.trim(),
       contact: form.contact.value.trim(),
       locale: getLocale(),
@@ -65,7 +67,7 @@ export function createReport(app) {
       try {
         const r = await fetch(REPORT.endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(p) });
         if (!r.ok) throw new Error(r.status);
-        root.querySelector('.report-body').innerHTML = `<p class="report-thanks">${t('reportThanks')}</p>`;
+        root.querySelector('.report-body').innerHTML = `<p class="report-thanks">${t(ctx.general ? 'feedbackThanks' : 'reportThanks')}</p>`;
         return;
       } catch (e) {
         status.textContent = t(e.message === '403' ? 'reportVerify' : 'reportFailed');
@@ -103,15 +105,18 @@ export function createReport(app) {
     root.innerHTML = `
       <form class="report-card">
         <button type="button" class="close" aria-label="${t('close')}">${icon.close}</button>
-        <div class="kicker">${t('reportLink')}</div>
-        <h2>${t('reportTitle')}</h2>
-        <p class="report-intro">${t('reportIntro')}</p>
+        <div class="kicker">${t(ctx.general ? 'feedbackLink' : 'reportLink')}</div>
+        <h2>${t(ctx.general ? 'feedbackTitle' : 'reportTitle')}</h2>
+        <p class="report-intro">${t(ctx.general ? 'feedbackIntro' : 'reportIntro')}</p>
         ${l || ctx.concept ? `<div class="report-about">${l ? `<span><b>${esc(app.name(l))}</b> <span class="mono">${l.id}</span></span>` : ''}${ctx.concept ? `<span>${esc(t('reportWordIs', ctx.conceptName ?? ctx.concept, ctx.word ?? '—'))}</span>` : ''}</div>` : ''}
         <div class="report-body">
-          <label class="field"><span>${t('reportWhat')}</span>
+          ${ctx.general
+            ? `<input type="hidden" name="kind" value="suggestion">
+          <label class="field"><span>${t('feedbackNote')}</span><textarea name="note" rows="6" required></textarea></label>`
+            : `<label class="field"><span>${t('reportWhat')}</span>
             <select name="kind">${KINDS.map((k) => `<option value="${k}" ${k === kind ? 'selected' : ''}>${t('reportKinds')[k]}</option>`).join('')}</select></label>
           <label class="field"><span>${t('reportFix')}</span><input name="fix" required autocomplete="off"></label>
-          <label class="field"><span>${t('reportNote')}</span><textarea name="note" rows="3"></textarea></label>
+          <label class="field"><span>${t('reportNote')}</span><textarea name="note" rows="3"></textarea></label>`}
           <label class="field"><span>${t('reportContact')}</span><input name="contact" type="email" autocomplete="email"></label>
           ${REPORT.endpoint && REPORT.turnstileSiteKey ? '<div class="report-human"></div>' : ''}
           <div class="report-actions">
@@ -130,7 +135,7 @@ export function createReport(app) {
     };
     root.querySelector('[data-act=copy]')?.addEventListener('click', () => copy(asText(payload(form))));
     if (REPORT.endpoint && REPORT.turnstileSiteKey) human(root.querySelector('.report-human'));
-    form.fix.focus();
+    (form.fix ?? form.note).focus();
   }
 
   // Cloudflare Turnstile, loaded only when a site key is configured

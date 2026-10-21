@@ -355,6 +355,13 @@ export default {
   reportThanks: '謝謝！我們會盡快核實。',
   reportFailed: '送出失敗，請複製回報。',
   reportVerify: '請先完成上面的真人驗證。',
+  feedbackLink: '意見與建議',
+  feedbackTitle: '對這個網站的建議',
+  feedbackIntro: '想看到的功能、用起來不順手的地方，或者任何關於這個網站的想法，都歡迎告訴我們。每一則都會認真看。',
+  feedbackNote: '你的建議',
+  feedbackThanks: '謝謝！你的建議已經送達。',
+  feedbackButton: '提建議',
+  feedbackAbout: '對網站有想法，或者發現哪裡不好用？歡迎提建議，也可以寫信到 {mail}。',
   reportKinds: { word: '某個詞', name: '名稱', place: '使用地區', family: '譜系 / 分類', summary: '簡介', other: '其他' },
   reportWordIs: (c, w) => `「${c}」這個詞：${w}`,
 };

@@ -361,6 +361,7 @@ async function boot() {
     localeBtn.setAttribute('aria-label', t('interfaceLanguage'));
     localeMenu.innerHTML = LOCALES.map((l) => `<button role="menuitem" data-code="${l.code}" class="${l.code === getLocale() ? 'on' : ''}" lang="${l.code}">${esc(l.name)}</button>`).join('')
       + `<a class="menu-about" href="#/me">${t('navMe')}</a><a class="menu-about" href="#/about">${t('navAbout')}</a>`
+      + `<button class="menu-about menu-feedback" type="button">${t('feedbackLink')}</button>`
       // on a phone the top bar has no room for the light/dark switch; it lives here too
       + `<button class="menu-about menu-theme" type="button">${t(THEME_NAME === 'atelier' ? 'themeToDark' : 'themeToLight')}</button>`;
     $('#random').textContent = t('random');
@@ -374,6 +375,10 @@ async function boot() {
   document.addEventListener('click', () => localeMenu.classList.remove('on'));
   localeMenu.addEventListener('click', async (e) => {
     if (e.target.closest('.menu-theme')) return switchTheme();
+    if (e.target.closest('.menu-feedback')) {
+      localeMenu.classList.remove('on');
+      return app.report({ general: true });
+    }
     const b = e.target.closest('[data-code]');
     if (!b) return;
     localeMenu.classList.remove('on');

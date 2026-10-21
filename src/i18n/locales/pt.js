@@ -355,6 +355,13 @@ export default {
   reportThanks: 'Obrigado! Vamos verificar.',
   reportFailed: 'Não foi possível enviar. Copie o relato.',
   reportVerify: 'Primeiro confirme que você é humano.',
+  feedbackLink: 'Sugestões',
+  feedbackTitle: 'Ideias para o Terraverba',
+  feedbackIntro: 'Algo que você gostaria de ver, algo que atrapalhou, ou qualquer outra coisa sobre o site. Lemos todas as mensagens.',
+  feedbackNote: 'Sua sugestão',
+  feedbackThanks: 'Obrigado! Sua sugestão foi enviada.',
+  feedbackButton: 'Enviar sugestão',
+  feedbackAbout: 'Tem ideias para o site ou algo não funciona como deveria? Envie uma sugestão ou escreva para {mail}.',
   reportKinds: { word: 'Uma palavra', name: 'O nome', place: 'Onde é falada', family: 'Família ou classificação', summary: 'O resumo', other: 'Outra coisa' },
   reportWordIs: (c, w) => `A palavra para “${c}”: ${w}`,
 };

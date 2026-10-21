@@ -39,7 +39,7 @@ const ABOUT = {
     <p>访问量由 Cloudflare Web Analytics 统计，它不使用 cookie，也不会跨网站追踪任何人。语言护照以及你放在上面的姓名和照片，只保存在这个浏览器里。你提交的纠错会保存下来以便核对；联系方式可以不填，填了也绝不公开。</p>`,
 };
 
-export function renderAbout(sheet) {
+export function renderAbout(sheet, app) {
   const zh = getLocale().startsWith('zh');
   // other interface languages bring their own text (content/translations)
   const own = contentFor('about');
@@ -48,5 +48,10 @@ export function renderAbout(sheet) {
       <div class="kicker">${t('navAbout')}</div>
       <h2>${t('aboutTitle')}</h2>
     </div>
-    <div class="sheet-body prose">${zh ? hant(ABOUT.zh) : own ?? ABOUT.en}</div>`;
+    <div class="sheet-body prose">${zh ? hant(ABOUT.zh) : own ?? ABOUT.en}
+      <h3>${t('feedbackLink')}</h3>
+      <p>${t('feedbackAbout').replace('{mail}', '<a href="mailto:contact@terraverba.org">contact@terraverba.org</a>')}</p>
+      <p><button class="btn small" type="button" data-act="feedback">${t('feedbackButton')}</button></p>
+    </div>`;
+  sheet.querySelector('[data-act=feedback]').onclick = () => app.report({ general: true });
 }

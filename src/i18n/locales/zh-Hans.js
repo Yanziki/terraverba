@@ -355,6 +355,13 @@ export default {
   reportThanks: '谢谢！我们会尽快核实。',
   reportFailed: '发送失败，请复制报告。',
   reportVerify: '请先完成上面的真人验证。',
+  feedbackLink: '意见与建议',
+  feedbackTitle: '对这个网站的建议',
+  feedbackIntro: '想看到的功能、用着不顺手的地方，或者任何关于这个网站的想法，都欢迎告诉我们。每一条都会认真看。',
+  feedbackNote: '你的建议',
+  feedbackThanks: '谢谢！你的建议已经送到。',
+  feedbackButton: '提建议',
+  feedbackAbout: '对网站有想法，或者发现哪里不好用？欢迎提建议，也可以写信到 {mail}。',
   reportKinds: { word: '某个词', name: '名称', place: '使用地区', family: '谱系 / 分类', summary: '简介', other: '其他' },
   reportWordIs: (c, w) => `“${c}”这个词：${w}`,
 };

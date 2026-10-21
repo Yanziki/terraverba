@@ -10,7 +10,8 @@
 //
 // The reader's email and IP stay in the database; the public issue never shows them.
 
-const KINDS = new Set(['word', 'name', 'place', 'family', 'summary', 'other']);
+// "suggestion" comes from the general feedback dialog: about the site, not a language
+const KINDS = new Set(['word', 'name', 'place', 'family', 'summary', 'other', 'suggestion']);
 const LIMIT_PER_HOUR = 20;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });

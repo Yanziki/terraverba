@@ -355,6 +355,13 @@ export default {
   reportThanks: 'ありがとうございます。確認いたします。',
   reportFailed: '送信できませんでした。内容をコピーしてください。',
   reportVerify: '先に、上の「人間であることの確認」を済ませてください。',
+  feedbackLink: 'ご意見・ご提案',
+  feedbackTitle: 'このサイトへのご意見',
+  feedbackIntro: 'あったらいいと思う機能、使いにくいところ、そのほかサイトについて思うことを何でもお寄せください。すべて目を通します。',
+  feedbackNote: 'ご意見',
+  feedbackThanks: 'ありがとうございます。ご意見を受け付けました。',
+  feedbackButton: '意見を送る',
+  feedbackAbout: 'サイトへのご意見や、うまく動かないところはありませんか？ 意見を送るか、{mail} までご連絡ください。',
   reportKinds: { word: '単語', name: '名称', place: '話されている地域', family: '語族・分類', summary: '解説', other: 'その他' },
   reportWordIs: (c, w) => `「${c}」の語：${w}`,
 };

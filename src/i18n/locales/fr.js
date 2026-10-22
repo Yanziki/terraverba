@@ -51,6 +51,7 @@ export default {
   speakers: 'Locuteurs',
   status: 'Menace',
   where: 'Parlée en',
+  worldwide: 'Dispersée dans le monde entier',
   morePlaces: (n) => `et ${N(n)} autres`,
   region: 'Macro-aire',
   macroareas: { Africa: 'Afrique', Australia: 'Australie', Eurasia: 'Eurasie', 'North America': 'Amérique du Nord', Papunesia: 'Papunésie', 'South America': 'Amérique du Sud' },

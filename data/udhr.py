@@ -11,6 +11,20 @@ HERE = Path(__file__).parent
 SRC = HERE / "raw" / "udhr" / "xml"
 OUT = HERE.parent / "public" / "data" / "udhr.json"
 NS = "{http://efele.net/udhr}"
+# where one language has several texts, the one in today's standard spelling
+# and script (the plain-named text is preferred otherwise; see rank)
+PREFER = {"deu_1996", "ron_2006", "tuk_latn", "uzn_latn", "azj_latn",
+          "lnc",  # Occitan in the classical norm, not the Provençal Mistralian spelling
+          "069"}  # Maori in its modern spelling, with macrons
+
+
+def rank(u):
+    """Higher is better: the most complete stage first, then a text in the
+    preferred orthography, then the text filed under the language's own code
+    or plain name (a reader saw "French (Welche)", a Lorraine dialect, where
+    standard French belonged)."""
+    f, iso, name = u.get("f"), u.get("iso639-3"), u.get("n") or ""
+    return (int(u.get("stage") or 0), f in PREFER, f == iso, "(" not in name)
 
 
 def main():
@@ -24,8 +38,8 @@ def main():
         path = SRC / f"udhr_{u.get('f')}.xml"
         if not g or not path.exists():
             continue
-        stage = int(u.get("stage") or 0)
-        if g in best and best[g][0] >= stage:
+        r = rank(u)
+        if g in best and best[g][0] >= r:
             continue
         root = ET.parse(path).getroot()
         art = next((a for a in root.iter(f"{NS}article") if a.get("number") == "1"), None)
@@ -33,7 +47,7 @@ def main():
         text = re.sub(r"\s+", " ", " ".join(t for t in paras if t)).strip()
         if len(text) < 20:
             continue
-        best[g] = (stage, [text, u.get("iso15924"), u.get("dir")])
+        best[g] = (r, [text, u.get("iso15924"), u.get("dir")])
     out = {g: v for g, (_, v) in sorted(best.items())}
     OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
     print(len(out), "languages with Article 1", file=sys.stderr)

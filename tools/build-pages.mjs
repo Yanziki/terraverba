@@ -8,6 +8,7 @@ import path from 'node:path';
 import { geoEquirectangular, geoPath } from 'd3';
 import { feature } from 'topojson-client';
 import { countryName } from '../src/countries.js';
+import { WORLDWIDE } from '../src/content/places.js';
 import { cldrLanguageName } from '../src/langnames.js';
 
 // the locale files format numbers for document.documentElement.lang
@@ -172,7 +173,7 @@ const num = (n) => n.toLocaleString(loc.code);
 const compact = (n) => (n < 10000 ? num(n) : new Intl.NumberFormat(loc.code, { notation: 'compact', compactDisplay: 'long', maximumFractionDigits: 1 }).format(n));
 const list = (items) => new Intl.ListFormat(loc.code, { style: 'long', type: 'conjunction' }).format(items);
 const place = (a2) => countryName(a2, loc.code, loc.countries[a2]);
-const places = (l) => l.countries.map(place).filter(Boolean);
+const places = (l) => (WORLDWIDE.has(l.id) ? [] : l.countries.map(place).filter(Boolean));
 const familyName = (l) => (l.isolate ? t('isolate') : l.family ? name(byId.get(l.family)) : t('unknown'));
 const langCount = (n) => (isZh() ? `${num(n)} 种语言` : `${num(n)} ${n === 1 ? 'language' : 'languages'}`);
 
@@ -313,6 +314,7 @@ function lede(l) {
     const what = { isolate: '一种孤立语言', sign: '一种手语', pidgin: '一种皮钦语', mixed: '一种混合语', artificial: '一种人造语言', unclassified: '一种尚未归类的语言', family: `${familyName(l)}的一种语言` }[kind];
     let s = `${nm}是${what}`;
     if (where.length) s += `，${extinct ? '过去' : '主要'}分布在${where.slice(0, 4).join('、')}`;
+    else if (WORLDWIDE.has(l.id)) s += '，使用者分散在世界各地';
     else if (l.macroarea) s += `，分布在${t('macroareas')[l.macroarea]}`;
     if (l.speakers && !extinct) s += `，使用人口约 ${compact(l.speakers)}`;
     s += extinct ? '，现已消亡。' : '。';
@@ -324,6 +326,7 @@ function lede(l) {
   const what = { isolate: 'a language isolate', sign: 'a sign language', pidgin: 'a pidgin', mixed: 'a mixed language', artificial: 'an artificial language', unclassified: 'an unclassified language', family: `${an(fam)} ${fam} language` }[kind];
   let s = `${nm} ${extinct ? 'was' : 'is'} ${what}`;
   if (where.length) s += ` ${extinct ? 'once spoken' : 'spoken'} in ${list(where.slice(0, 4))}`;
+  else if (WORLDWIDE.has(l.id)) s += ' spoken around the world';
   else if (l.macroarea) s += ` spoken in ${t('macroareas')[l.macroarea]}`;
   if (l.speakers && !extinct) s += `, by about ${compact(l.speakers)} people`;
   s += '.';
@@ -357,7 +360,7 @@ function langPage(l) {
     [t('speakers'), l.speakers ? compact(l.speakers) : '—'],
     [t('status'), t('aes')[l.aes]],
     [loc.s.family, fam ? `<a href="${href(P.group(fam))}">${esc(name(fam))}</a>` : esc(familyName(l)), true],
-    [t('where'), esc(where.length ? list(where.slice(0, 8)) + (where.length > 8 ? ' …' : '') : t('macroareas')[l.macroarea] ?? '—'), true],
+    [t('where'), esc(where.length ? list(where.slice(0, 8)) + (where.length > 8 ? ' …' : '') : WORLDWIDE.has(l.id) ? t('worldwide') : t('macroareas')[l.macroarea] ?? '—'), true],
     [t('codes'), `${l.iso ? `ISO 639-3 <b>${l.iso}</b> · ` : ''}Glottolog <b>${l.id}</b>`, true],
   ].filter(Boolean);
   if (l.dialects) facts.push([isZh() ? '方言' : 'Dialects', esc(t('dialectsNote', l.dialects)), true]);

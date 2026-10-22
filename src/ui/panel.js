@@ -9,6 +9,7 @@ import { summary } from './wiki.js';
 import { forLanguage, play, pageOf, creditOf } from '../audio.js';
 import { conceptName } from './concepts.js';
 import { angle } from '../data.js';
+import { WORLDWIDE } from '../content/places.js';
 
 // the static page built for each language and family (tools/build-pages.mjs);
 // Chinese interfaces get the Chinese page, everyone else the English one
@@ -206,7 +207,7 @@ export function createPanel(app) {
     const note = NOTES[l.id];
     const familyNote = l.isolate ? t('isolateNote') : l.family === 'sign1238' ? t('signNote') : null;
     const alt = [app.altName(l), l.native && l.native !== l.en && l.native !== app.name(l) ? l.native : null].filter(Boolean);
-    const places = l.countries.map((a2) => data.countryName(a2)).filter(Boolean);
+    const places = WORLDWIDE.has(l.id) ? [] : l.countries.map((a2) => data.countryName(a2)).filter(Boolean);
     const my = mount(`
       <div class="p-kicker">${langDot(l)}${esc(app.familyName(l))}</div>
       <h1 class="p-title">${esc(app.name(l))}</h1>
@@ -216,7 +217,7 @@ export function createPanel(app) {
         <div class="fact"><div class="k">${t('status')}</div><div class="v">${esc(t('aes')[l.aes])}</div>${l.aes ? meter(l) : ''}</div>
         <div class="fact wide"><div class="k">${t('where')}</div><div class="v places">${places.length > 10
           ? `<span class="few">${esc(formatList(places.slice(0, 8)))}</span> <button class="more-places" type="button">${esc(t('morePlaces', places.length - 8))}</button><span class="all" hidden>${esc(formatList(places))}</span>`
-          : esc(places.length ? formatList(places) : t('macroareas')[l.macroarea] ?? '—')}</div></div>
+          : esc(places.length ? formatList(places) : WORLDWIDE.has(l.id) ? t('worldwide') : t('macroareas')[l.macroarea] ?? '—')}</div></div>
         <div class="fact wide"><div class="k">${t('codes')}</div><div class="v mono">${l.iso ? `ISO 639-3 ${esc(l.iso)} · ` : ''}Glottolog ${esc(l.id)}</div>${l.dialects ? `<div class="v"><small>${esc(t('dialectsNote', l.dialects))}</small></div>` : ''}</div>
       </div>
       <div class="section listen-lang" hidden></div>

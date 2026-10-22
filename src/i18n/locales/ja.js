@@ -51,6 +51,7 @@ export default {
   speakers: '話者数',
   status: '危機度',
   where: '話されている地域',
+  worldwide: '世界各地に散らばっている',
   morePlaces: (n) => `ほか${N(n)}か所`,
   region: '大地域',
   macroareas: { Africa: 'アフリカ', Australia: 'オーストラリア', Eurasia: 'ユーラシア', 'North America': '北アメリカ', Papunesia: 'パプネシア', 'South America': '南アメリカ' },

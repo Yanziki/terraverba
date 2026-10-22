@@ -19,6 +19,18 @@ HERE = Path(__file__).parent
 RAW = HERE / "raw"
 OUT = HERE.parent / "public" / "data"
 t2s = opencc.OpenCC("t2s").convert
+# Simplified names in mainland usage where Wikidata only has a Taiwanese or
+# generic label (a reader reported 义大利手语). A short checked list, not a
+# general converter: OpenCC's tw2sp also rewrites 文字 → 文本 and 核心 → 内核.
+# Traditional names keep Taiwan usage (義大利).
+TW_TO_CN = [("义大利", "意大利"), ("玻里尼西亚", "波利尼西亚"), ("汶莱", "文莱"), ("吉里巴斯", "基里巴斯"),
+            ("叶门", "也门"), ("古乔治亚语", "古格鲁吉亚语")]
+
+
+def cn_usage(name):
+    for a, b in TW_TO_CN:
+        name = name.replace(a, b) if name else name
+    return name
 _s2tw = opencc.OpenCC("s2tw").convert
 # in transliterated names 托 and 里 are sound, not meaning: s2tw's 託 ("entrust")
 # and 裡 ("inside") are wrong there (喬克託語 → 喬克托語, 惠裡切語 → 惠里切語)
@@ -231,13 +243,13 @@ def countries_of(r, lat, lon):
 
 def localized_name(locale, labels, lexvo, gid, glossary):
     if locale == "zh-Hans":
-        return ZH_OVERRIDE.get(gid) or tidy(zh_hans(labels, lexvo)) or glossary
+        return cn_usage(ZH_OVERRIDE.get(gid) or tidy(zh_hans(labels, lexvo)) or glossary)
     if locale == "zh-Hant":
         if gid in ZH_HANT_OVERRIDE:
             return ZH_HANT_OVERRIDE[gid]
         if gid in ZH_OVERRIDE:
             return s2t(ZH_OVERRIDE[gid])
-        hans = localized_name("zh-Hans", labels, lexvo, gid, glossary)
+        hans = ZH_OVERRIDE.get(gid) or tidy(zh_hans(labels, lexvo)) or glossary
         return tidy(zh_hant(labels)) or (s2t(hans) if hans else None)
     if locale == "en":
         return None  # Glottolog's own English names are the base

@@ -51,6 +51,7 @@ export default {
   speakers: '使用人口',
   status: '濒危程度',
   where: '使用地区',
+  worldwide: '世界各地，分散分布',
   morePlaces: (n) => `等另外 ${N(n)} 个`,
   region: '大区',
   macroareas: { Africa: '非洲', Australia: '澳大利亚', Eurasia: '欧亚大陆', 'North America': '北美洲', Papunesia: '巴布亚—东南亚岛屿', 'South America': '南美洲' },

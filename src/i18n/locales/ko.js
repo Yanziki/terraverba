@@ -51,6 +51,7 @@ export default {
   speakers: '화자 수',
   status: '위기 정도',
   where: '사용 지역',
+  worldwide: '전 세계에 흩어져 있음',
   morePlaces: (n) => `외 ${N(n)}곳`,
   region: '대륙권',
   macroareas: { Africa: '아프리카', Australia: '오스트레일리아', Eurasia: '유라시아', 'North America': '북아메리카', Papunesia: '파푸네시아', 'South America': '남아메리카' },

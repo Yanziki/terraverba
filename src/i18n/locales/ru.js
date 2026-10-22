@@ -56,6 +56,7 @@ export default {
   speakers: 'Носители',
   status: 'Угроза',
   where: 'Распространён',
+  worldwide: 'По всему миру, рассеянно',
   morePlaces: (n) => `и ещё ${N(n)}`,
   region: 'Макроареал',
   macroareas: { Africa: 'Африка', Australia: 'Австралия', Eurasia: 'Евразия', 'North America': 'Северная Америка', Papunesia: 'Папунезия', 'South America': 'Южная Америка' },

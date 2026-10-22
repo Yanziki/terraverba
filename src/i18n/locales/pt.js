@@ -51,6 +51,7 @@ export default {
   speakers: 'Falantes',
   status: 'Ameaça',
   where: 'Falada em',
+  worldwide: 'Dispersa pelo mundo todo',
   morePlaces: (n) => `e mais ${N(n)}`,
   region: 'Macroárea',
   macroareas: { Africa: 'África', Australia: 'Austrália', Eurasia: 'Eurásia', 'North America': 'América do Norte', Papunesia: 'Papunésia', 'South America': 'América do Sul' },

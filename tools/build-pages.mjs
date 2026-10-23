@@ -91,6 +91,16 @@ const similarity = Object.fromEntries(['vocabulary', 'grammar'].map((k) => {
 const feats = read('features.json');
 const featIndex = new Map(feats.langs.map((g, i) => [g, i]));
 const udhr = read('udhr.json');
+const scripts = read('scripts.json');
+// "Arabic (China)" for each script a language is written in (src/scripts.js has the format)
+function scriptsOf(l) {
+  return (scripts.langs[l.id] ?? []).map((e) => {
+    const [code, where] = e.replace(/^~/, '').split(':');
+    const nm = scripts.names[code]?.[loc.code] ?? scripts.names[code]?.en ?? code;
+    const ws = (where ? where.split(',') : []).map(place).filter(Boolean);
+    return ws.length ? (isZh() ? `${nm}（${ws.join('、')}）` : `${nm} (${list(ws)})`) : nm;
+  });
+}
 const wiki = {};
 for (const f of fs.readdirSync(path.join(PUB, 'wiki'))) Object.assign(wiki, JSON.parse(fs.readFileSync(path.join(PUB, 'wiki', f), 'utf8')));
 const wordIndex = read('words/index.json');
@@ -361,6 +371,7 @@ function langPage(l) {
     [t('status'), t('aes')[l.aes]],
     [loc.s.family, fam ? `<a href="${href(P.group(fam))}">${esc(name(fam))}</a>` : esc(familyName(l)), true],
     [t('where'), esc(where.length ? list(where.slice(0, 8)) + (where.length > 8 ? ' …' : '') : WORLDWIDE.has(l.id) ? t('worldwide') : t('macroareas')[l.macroarea] ?? '—'), true],
+    scriptsOf(l).length ? [t('writtenIn'), esc(scriptsOf(l).join(' · ')), true] : null,
     [t('codes'), `${l.iso ? `ISO 639-3 <b>${l.iso}</b> · ` : ''}Glottolog <b>${l.id}</b>`, true],
   ].filter(Boolean);
   if (l.dialects) facts.push([isZh() ? '方言' : 'Dialects', esc(t('dialectsNote', l.dialects)), true]);

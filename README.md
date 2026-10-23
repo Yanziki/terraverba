@@ -54,6 +54,8 @@ python3 -m venv .venv && .venv/bin/pip install opencc-python-reimplemented numpy
 python3 words_extract.py             # → raw/wiktionary/translations.json (only the words on the list)
 .venv/bin/python words.py            # → public/data/words/*.json, plus raw/wiktionary/audit.md for checking by hand
 .venv/bin/python udhr.py             # UDHR in Unicode (raw/udhr/xml/) → public/data/udhr.json
+python3 scripts.py                   # CLDR (raw/cldr/, with likelySubtags.json and scripts/<locale>.json)
+                                     # + Wikidata writing systems (raw/wikidata/writing_systems.csv) → public/data/scripts.json
 python3 fetch_wiki.py                # → raw/wiki/*.json (stored summaries; resumable)
 .venv/bin/python to_simplified.py
 python3 shard_wiki.py                # → public/data/wiki/00–63.json
@@ -94,6 +96,7 @@ tools/               headless-Chrome screenshots and tests used during developme
 - Languages, classification, coordinates, endangerment: [Glottolog 5.3](https://glottolog.org) (Hammarström, Forkel, Haspelmath & Bank), CC BY 4.0
 - Names in other languages, endonyms, speaker numbers: [Wikidata](https://www.wikidata.org), CC0 (speaker numbers are rough)
 - Country and territory names, speakers per country (to order "where it is spoken" and choose the map question's main countries): [Unicode CLDR](https://cldr.unicode.org) 46, Unicode License V3; names come from the browser's own CLDR (`Intl.DisplayNames`)
+- Scripts each language is written in: Unicode CLDR 49 (language data, likely subtags, script names), Unicode License V3; Wikidata "writing system" (P282, CC0) where CLDR has none; a few multi-script languages checked by hand (`data/scripts.py`). Scripts inferred from CLDR's likely subtags alone are marked as such on the site
 - Similarity: [ASJP](https://asjp.clld.org) v21, [Grambank](https://grambank.clld.org) v1.0.3, CC BY 4.0
 - Features: Grambank v1.0.3 (CC BY 4.0), [PHOIBLE](https://phoible.org) 2.0 (CC BY-SA 3.0)
 - Words: [Wiktionary](https://en.wiktionary.org) translation tables (via [kaikki.org](https://kaikki.org)), CC BY-SA 4.0; ASJP

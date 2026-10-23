@@ -104,6 +104,7 @@ export async function loadData() {
   data.grambank = () => indexed('features-grambank.json');
   data.phoible = () => indexed('features-phoible.json');
   data.udhr = () => (lazy.udhr ??= get('udhr.json'));
+  data.scripts = () => (lazy.scripts ??= get('scripts.json'));
 
   // similarity data is only fetched when first needed
   const sims = {};

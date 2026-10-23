@@ -10,6 +10,7 @@ import { forLanguage, play, pageOf, creditOf } from '../audio.js';
 import { conceptName } from './concepts.js';
 import { angle } from '../data.js';
 import { WORLDWIDE } from '../content/places.js';
+import { parseScript } from '../scripts.js';
 
 // the static page built for each language and family (tools/build-pages.mjs);
 // Chinese interfaces get the Chinese page, everyone else the English one
@@ -218,6 +219,7 @@ export function createPanel(app) {
         <div class="fact wide"><div class="k">${t('where')}</div><div class="v places">${places.length > 10
           ? `<span class="few">${esc(formatList(places.slice(0, 8)))}</span> <button class="more-places" type="button">${esc(t('morePlaces', places.length - 8))}</button><span class="all" hidden>${esc(formatList(places))}</span>`
           : esc(places.length ? formatList(places) : WORLDWIDE.has(l.id) ? t('worldwide') : t('macroareas')[l.macroarea] ?? '—')}</div></div>
+        <div class="fact wide scripts-fact" hidden><div class="k">${t('writtenIn')}</div><div class="v"></div></div>
         <div class="fact wide"><div class="k">${t('codes')}</div><div class="v mono">${l.iso ? `ISO 639-3 ${esc(l.iso)} · ` : ''}Glottolog ${esc(l.id)}</div>${l.dialects ? `<div class="v"><small>${esc(t('dialectsNote', l.dialects))}</small></div>` : ''}</div>
       </div>
       <div class="section listen-lang" hidden></div>
@@ -245,6 +247,25 @@ export function createPanel(app) {
     fillSimilar(l, my);
     fillProfile(l, my);
     fillSample(l, my);
+    fillScripts(l, my);
+  }
+
+  // the scripts it is written in, and where each one is used when it differs
+  async function fillScripts(l, my) {
+    const all = await data.scripts();
+    const list = all.langs[l.id];
+    if (my !== token || !list) return;
+    const loc = getLocale();
+    const parsed = list.map(parseScript);
+    const shown = parsed.map((s) => {
+      const name = all.names[s.code]?.[loc] ?? all.names[s.code]?.en ?? s.code;
+      const where = s.countries.map((a2) => data.countryName(a2)).filter(Boolean);
+      const [open, close] = /^(zh|ja)/.test(loc) ? ['（', '）'] : [' (', ')'];
+      return where.length ? `${name}${open}${formatList(where)}${close}` : name;
+    });
+    const fact = el.querySelector('.scripts-fact');
+    fact.hidden = false;
+    fact.querySelector('.v').innerHTML = esc(shown.join(' · ')) + (parsed[0].inferred ? `<div><small class="muted">${esc(t('scriptInferred'))}</small></div>` : '');
   }
 
   // what the language looks like written down: Article 1 of the UDHR

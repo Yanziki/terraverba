@@ -1,4 +1,5 @@
 import { FAMILY, AES } from '../palette.js';
+import { SCRIPT_GROUPS, NO_SCRIPT, mainScript, scriptGroup } from '../scripts.js';
 import { t, formatNumber } from '../i18n/index.js';
 import { esc, dot, icon } from './html.js';
 
@@ -17,7 +18,16 @@ export function createLayers(app) {
   ];
   const statusEntries = () =>
     AES.slice(1).concat(AES[0]).map((a) => ({ key: `aes${a.level}`, color: a.color, label: t('aes')[a.level], test: (l) => l.aes === a.level, hollow: a.level === 6 }));
-  const entries = () => (app.state.colorMode === 'status' ? statusEntries() : app.state.colorMode === 'feature' ? [] : familyEntries());
+  const scriptOf = (l) => scriptGroup(mainScript(app.state.scripts, l.id))?.key ?? 'noScript';
+  const scriptEntries = () => [
+    ...SCRIPT_GROUPS.map((g) => ({ key: g.key, color: g.color, label: t(g.key), test: (l) => l.family !== 'sign1238' && scriptOf(l) === g.key })),
+    { key: 'noScript', color: NO_SCRIPT, label: t('noScript'), test: (l) => l.family !== 'sign1238' && scriptOf(l) === 'noScript' },
+    { key: 'sign', color: FAMILY.sign, label: t('sign'), test: (l) => l.family === 'sign1238', diamond: true },
+  ];
+  const entries = () => {
+    const m = app.state.colorMode;
+    return m === 'status' ? statusEntries() : m === 'script' ? scriptEntries() : m === 'feature' ? [] : familyEntries();
+  };
   const idsFor = (entry) => new Set(data.languages.filter(entry.test).map((l) => l.id));
   const counts = new Map();
   const count = (entry) => {
@@ -47,6 +57,7 @@ export function createLayers(app) {
         <div class="seg small">
           <button class="${s.colorMode === 'family' ? 'on' : ''}" data-color="family">${t('colorFamily')}</button>
           <button class="${s.colorMode === 'status' ? 'on' : ''}" data-color="status">${t('colorStatus')}</button>
+          <button class="${s.colorMode === 'script' ? 'on' : ''}" data-color="script">${t('colorScript')}</button>
           <button class="${s.colorMode === 'feature' ? 'on' : ''}" data-color="feature">${t('colorFeature')}</button>
         </div>
         <ul class="legend-list">
@@ -54,7 +65,7 @@ export function createLayers(app) {
             ${e.swatches ? `<span class="swatches">${secondary().map((c) => `<i style="background:${c}"></i>`).join('')}</span>` : dot(e.color, e)}
             <span class="lbl">${esc(e.label)}</span><span class="n">${formatNumber(count(e))}</span></li>`).join('')}
         </ul>
-        <div class="legend-note">${s.colorMode === 'status' ? t('aesNote') : `${t('otherNote')} ${t('extinctHollow')}`} ${t('dotMeaning')}</div>
+        <div class="legend-note">${s.colorMode === 'status' ? t('aesNote') : s.colorMode === 'script' ? t('scriptNote') : `${t('otherNote')} ${t('extinctHollow')}`} ${t('dotMeaning')}</div>
       </div>`;
 
     el.querySelector('.layers-head').onclick = () => {

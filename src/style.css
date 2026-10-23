@@ -529,7 +529,7 @@ body.page-open .topbar { background: var(--paper); border-bottom: 1px solid var(
   }
   .layers-x { display: inline-grid; place-items: center; margin-left: auto; width: 28px; height: 28px; border-radius: 50%; background: var(--paper-2); color: var(--ink-2); }
   .layers-x svg { width: 14px; height: 14px; stroke-width: 1.6; }
-  #layers .legend-list { grid-template-columns: 1fr 1fr; column-gap: 14px; }
+  #layers .legend-list { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 14px; }
   #coords { display: none; }
   #random, #nearme { bottom: 62px; right: 10px; }
   #random.raised, #nearme.raised { bottom: calc(62vh + 12px); }

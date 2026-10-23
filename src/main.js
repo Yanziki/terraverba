@@ -3,7 +3,8 @@ import './theme.css';
 import { THEME_NAME } from './theme.js';
 import { loadData, angle, toVec, EARTH_KM } from './data.js';
 import { Globe } from './globe.js';
-import { setPalette, familyColor, statusColor } from './palette.js';
+import { setPalette, familyColor, statusColor, FAMILY } from './palette.js';
+import { NO_SCRIPT, mainScript, scriptGroup } from './scripts.js';
 import { LOCALES, detectLocale, setLocale, getLocale, t, formatCount, formatNumber, onContent } from './i18n/index.js';
 import { createPanel } from './ui/panel.js';
 import { createTree } from './ui/tree.js';
@@ -83,6 +84,10 @@ async function boot() {
   app.altName = (x) => (getLocale() !== 'en' && app.name(x) !== x.en ? x.en : null);
   app.colorOf = (l) => {
     if (app.state.colorMode === 'status') return statusColor(l);
+    if (app.state.colorMode === 'script') {
+      if (l.family === 'sign1238') return FAMILY.sign;
+      return scriptGroup(mainScript(app.state.scripts, l.id))?.color ?? NO_SCRIPT;
+    }
     if (app.state.colorMode === 'feature' && app.state.feature) {
       const code = app.state.feature.values.get(l.id);
       return code == null ? NO_DATA : app.state.feature.colors.get(code) ?? NO_DATA;
@@ -215,6 +220,14 @@ async function boot() {
     globe.setFocus(pick?.ids ?? null, { strong, mode: pick?.mode });
   };
   app.setColorMode = (mode) => {
+    // the script table is fetched the first time it is asked for
+    if (mode === 'script' && !app.state.scripts) {
+      data.scripts().then((s) => {
+        app.state.scripts = s;
+        app.setColorMode('script');
+      });
+      return;
+    }
     app.state.colorMode = mode;
     globe.setColors(app.colorOf);
     layers.render();

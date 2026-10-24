@@ -9,7 +9,12 @@ Output: raw/wiktionary/audio_ll.json  [[concept, glottocode, word, file, tags], 
 Results are cached per language, with the spellings already asked for, so a
 rerun only asks for what is new (a word added to the map); `audio_lingualibre.py
 iloveyou …` asks again for those concepts regardless.
+`audio_lingualibre.py --commons wuu …` reads a language's recordings from its
+Commons category instead (Category:Lingua Libre pronunciation-wuu), whose file
+names carry speaker and transcription: for languages the SPARQL service does
+not list, or while it is down. Those hits are cached like the others.
 """
+import re
 import json, sys, time, types, unicodedata, urllib.parse, urllib.request
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -50,7 +55,28 @@ def lit(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+def commons_hits(iso):
+    """[[transcription, file URL, speaker]] from the language's Commons category"""
+    api = "https://commons.wikimedia.org/w/api.php"
+    hits, cont = [], {}
+    while True:
+        q = {"action": "query", "format": "json", "list": "categorymembers", "cmtype": "file", "cmlimit": "500",
+             "cmtitle": f"Category:Lingua Libre pronunciation-{iso}", **cont}
+        with urllib.request.urlopen(urllib.request.Request(f"{api}?{urllib.parse.urlencode(q)}", headers={"User-Agent": UA["User-Agent"]}), timeout=60) as r:
+            d = json.load(r)
+        for m in d["query"]["categorymembers"]:
+            # File:LL-Q34290 (wuu)-Andrepoiy-人.wav
+            got = re.match(r"File:LL-Q\d+ \([^)]*\)-([^-]+)-(.+)\.\w+$", m["title"])
+            if got:
+                name = m["title"][5:]
+                hits.append([unicodedata.normalize("NFC", got[2]), "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(name), "commons:" + got[1]])
+        if "continue" not in d:
+            return hits
+        cont = d["continue"]
+
+
 def main():
+    commons = sys.argv[2:] if sys.argv[1:2] == ["--commons"] else None
     L = json.loads((PUB / "languages.json").read_text())
     langs = [dict(zip(L["fields"], r)) for r in L["rows"]]
     by_iso = {l["iso"]: l["id"] for l in langs if l["iso"] and l["family"] != "sign1238"}
@@ -70,8 +96,17 @@ def main():
             for spelling in [f[1]] + ([f[5]] if len(f) > 5 and f[5] else []):
                 shown[f[0]].setdefault(spelling, w["id"])
 
+    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    if commons:
+        for iso in commons:
+            g = from_iso(iso)
+            got = commons_hits(iso)
+            cache[g] = cache.get(g, []) + [h for h in got if h not in cache.get(g, [])]
+            print(f"{iso} → {g}: {len(got)} recordings on Commons", file=sys.stderr)
+        CACHE.write_text(json.dumps(cache, ensure_ascii=False))
+
     # Lingua Libre's languages, by ISO 639-3
-    rows = sparql(f"SELECT ?lang ?iso WHERE {{ ?lang <{LL}P2> <https://lingualibre.org/entity/Q4> ; <{LL}P13> ?iso }}")
+    rows = [] if commons else sparql(f"SELECT ?lang ?iso WHERE {{ ?lang <{LL}P2> <https://lingualibre.org/entity/Q4> ; <{LL}P13> ?iso }}")
     ll_langs = defaultdict(list)
     for r in rows:
         g = from_iso(r["iso"]["value"])
@@ -96,10 +131,13 @@ def main():
         time.sleep(1)
         return [[h["t"]["value"], h["file"]["value"], h["speaker"]["value"]] for h in got]
 
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
     asked = cache.setdefault("_asked", {})
-    again = set(sys.argv[1:])
+    again = set() if commons else set(sys.argv[1:])
     out = []
+    # languages found only through Commons keep their cached hits
+    for g in cache:
+        if not g.startswith("_") and g in shown:
+            ll_langs.setdefault(g, [])
     for i, (g, items) in enumerate(sorted(ll_langs.items())):
         # each spelling Lingua Libre might use → (concept, the spelling the map shows)
         words = {}
@@ -110,7 +148,7 @@ def main():
             asked[g] = list(shown[g])
         done = set(asked.get(g, []))
         keys = [w for w, (c, _) in words.items() if w not in done or c in again]
-        if keys:
+        if keys and items:
             got = [h for item in items for k in range(0, len(keys), 100) for h in lookup(item, keys[k:k + 100])]
             cache[g] = cache.get(g, []) + [h for h in got if h not in cache.get(g, [])]
             asked[g] = sorted(done | set(keys))

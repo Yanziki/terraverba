@@ -91,7 +91,7 @@ function mailOf(r, id) {
     '',
     `Report #${id}, kept in the D1 database "terraverba" (table reports).`,
   ].filter((x) => x != null).join('\n');
-  return { subject: `[Terraverba] ${r.kind}${about ? ` · ${about}` : ''}`, text };
+  return { subject: `[Terraverba] ${r.kind}${about ? ` · ${about}` : ''}`, text, replyTo: r.contact };
 }
 
 async function openIssue(env, r, id) {

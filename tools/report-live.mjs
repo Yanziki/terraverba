@@ -30,6 +30,7 @@ await page.waitForSelector('#report.on input[name=fix]', { timeout: 15000 }).cat
   throw e;
 });
 await page.type('#report input[name=fix]', 'Automated test from tools/report-live.mjs, please ignore');
+if (process.env.CONTACT) await page.type('#report input[name=contact]', process.env.CONTACT);
 // wait for Turnstile to hand over its token
 console.log('dialog open, waiting for Turnstile');
 const token = await page.waitForFunction(() => document.querySelector('#report [name="cf-turnstile-response"]')?.value, { timeout: 45000 }).then(() => true).catch(() => false);

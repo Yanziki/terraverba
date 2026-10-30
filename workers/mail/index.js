@@ -15,14 +15,18 @@ const b64 = (s) => {
   return btoa(bin);
 };
 const wrap = (s) => s.replace(/.{76}/g, '$&\r\n');
+// the reader's address becomes Reply-To only when it is one plain address,
+// so nothing they type can add a header or a second recipient
+const plainAddress = (s) => typeof s === 'string' && /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$/.test(s) && s.length <= 200;
 
 export default {
   async fetch(request, env) {
     if (request.method !== 'POST' || !env.TO) return new Response('no', { status: 405 });
-    const { subject, text } = await request.json();
+    const { subject, text, replyTo } = await request.json();
     const raw = [
       `From: Terraverba <${FROM}>`,
       `To: <${env.TO}>`,
+      ...(plainAddress(replyTo) ? [`Reply-To: <${replyTo}>`] : []),
       `Subject: =?UTF-8?B?${b64(String(subject).slice(0, 180))}?=`,
       `Date: ${new Date().toUTCString()}`,
       `Message-ID: <${crypto.randomUUID()}@terraverba.org>`,
